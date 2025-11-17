@@ -47,14 +47,10 @@ func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
 			}
 		} else {
 			if len(new) == (total/2)+1 {
-				fmt.Println(new)
 				return float64((new[len(new)-1] + new[len(new)-2])) / 2
 			}
 		}
 	}
-	// fmt.Printf("i : %d\n", i)
-	// fmt.Printf("j : %d\n", j)
-	// fmt.Printf("new : %v\n", new)
 	if i == m {
 		new = append(new, nums2[j:]...)
 	} else {
@@ -63,7 +59,6 @@ func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
 	if !isEven {
 		return float64(new[(total-1)/2])
 	} else {
-		fmt.Println(new)
 		return float64(new[(total/2)]+new[(total/2)-1]) / 2
 	}
 }
