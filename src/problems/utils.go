@@ -2,15 +2,15 @@ package problems
 
 import "fmt"
 
-type LinkedList struct {
+type ListNode struct {
 	val  int
-	next *LinkedList
+	next *ListNode
 }
 
-func GenerateLinkedList(arr []int) *LinkedList {
-	var nextList *LinkedList
+func GenerateLinkedList(arr []int) *ListNode {
+	var nextList *ListNode
 	for i := len(arr) - 1; i >= 0; i-- {
-		buff := &LinkedList{
+		buff := &ListNode{
 			val:  arr[i],
 			next: nextList,
 		}
@@ -19,7 +19,7 @@ func GenerateLinkedList(arr []int) *LinkedList {
 	return nextList
 }
 
-func PrintLinkedList(list *LinkedList) {
+func PrintLinkedList(list *ListNode) {
 	for {
 		if list != nil {
 			fmt.Printf("%d ", list.val)

@@ -8,5 +8,5 @@ import (
 
 func main() {
 	fmt.Println("Hello World!")
-	problems.Func_1()
+	problems.Problem_2()
 }

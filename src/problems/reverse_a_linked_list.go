@@ -6,7 +6,7 @@ func Func_1() {
 	Reverse(list)
 }
 
-func Reverse(list *LinkedList) {
+func Reverse(list *ListNode) {
 	if list != nil {
 		end := list
 		nextEnd := end.next
