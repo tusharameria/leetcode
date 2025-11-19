@@ -8,5 +8,5 @@ import (
 
 func main() {
 	fmt.Println("Hello World!")
-	problems.ClimbingStairs()
+	problems.Problem_2154()
 }
