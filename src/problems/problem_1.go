@@ -48,3 +48,14 @@ func twoSumEff(nums []int, target int) []int {
 	}
 	return nil
 }
+
+func twoSumBin(nums []int, target int) []int {
+	sort.Ints(nums)
+
+	for i := 0; i <= len(nums)-1; i++ {
+		if index := BinarySearchInt(nums[i+1:], target-nums[i]); index != -1 {
+			return []int{i, i + index}
+		}
+	}
+	return []int{}
+}

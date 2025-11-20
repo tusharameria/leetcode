@@ -30,3 +30,21 @@ func PrintLinkedList(list *ListNode) {
 		}
 	}
 }
+
+func BinarySearchInt(nums []int, val int) int {
+	// this assumes nums is sorted in ascending order
+	n := len(nums)
+	left := 0
+	right := n - 1
+	for left <= right {
+		index := left + (right-left+1)/2
+		if nums[index] == val {
+			return index
+		} else if nums[index] > val {
+			right = index - 1
+		} else {
+			left = index + 1
+		}
+	}
+	return -1
+}
