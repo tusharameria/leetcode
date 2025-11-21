@@ -19,22 +19,22 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 			val1 := 0
 			val2 := 0
 			if up != nil {
-				val1 = up.val
-				up = up.next
+				val1 = up.Val
+				up = up.Next
 			}
 			if down != nil {
-				val2 = down.val
-				down = down.next
+				val2 = down.Val
+				down = down.Next
 			}
 			sum := val1 + val2 + carry
 			carry = int(sum / 10)
 
-			start.next = &ListNode{
-				val: sum % 10,
+			start.Next = &ListNode{
+				Val: sum % 10,
 			}
-			start = start.next
+			start = start.Next
 
 		}
 	}
-	return res.next
+	return res.Next
 }

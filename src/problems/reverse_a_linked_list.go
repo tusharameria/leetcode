@@ -9,15 +9,15 @@ func Func_1() {
 func Reverse(list *ListNode) {
 	if list != nil {
 		end := list
-		nextEnd := end.next
+		nextEnd := end.Next
 		for {
 			if nextEnd == nil {
 				break
 			}
-			end.next = nextEnd.next
-			nextEnd.next = list
+			end.Next = nextEnd.Next
+			nextEnd.Next = list
 			list = nextEnd
-			nextEnd = end.next
+			nextEnd = end.Next
 		}
 	}
 	PrintLinkedList(list)
