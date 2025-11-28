@@ -31,6 +31,23 @@ func PrintLinkedList(list *ListNode) {
 	}
 }
 
+func ReverseLinkedList(list *ListNode) {
+	if list != nil {
+		end := list
+		nextEnd := end.Next
+		for {
+			if nextEnd == nil {
+				break
+			}
+			end.Next = nextEnd.Next
+			nextEnd.Next = list
+			list = nextEnd
+			nextEnd = end.Next
+		}
+	}
+	PrintLinkedList(list)
+}
+
 func BinarySearchInt(nums []int, val int) int {
 	// this assumes nums is sorted in ascending order
 	n := len(nums)
