@@ -65,3 +65,15 @@ func BinarySearchInt(nums []int, val int) int {
 	}
 	return -1
 }
+
+func GenerateBitArrayFromInt(n int) []int {
+	if n == 0 {
+		return []int{0}
+	}
+	bitArray := []int{}
+	for n > 0 {
+		bitArray = append(bitArray, n%2)
+		n /= 2
+	}
+	return bitArray
+}
