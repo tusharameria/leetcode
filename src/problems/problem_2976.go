@@ -13,10 +13,10 @@ func Problem_2976() {
 	// original := []byte{'a', 'b', 'c', 'c', 'e', 'd'}
 	// changed := []byte{'b', 'c', 'b', 'e', 'b', 'e'}
 	// cost := []int{2, 5, 5, 1, 2, 20}
-	fmt.Printf("minimumCost : %v\n", minimumCost(source, target, original, changed, cost))
+	fmt.Printf("minimumCost : %v\n", minimumCostOld(source, target, original, changed, cost))
 }
 
-func minimumCost(source string, target string, original []byte, changed []byte, cost []int) int64 {
+func minimumCostOld(source string, target string, original []byte, changed []byte, cost []int) int64 {
 	const INF int64 = 1e18
 	n := 26
 
