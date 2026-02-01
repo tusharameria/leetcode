@@ -14,10 +14,10 @@ func Problem_2977() {
 	original := []string{"dddccdacbbbdcadca", "ddbccdaabbbbcbcaa", "dcbbdbbccbcbccaca", "ccadddaabdadbddbc", "dcbcbacaaccaadccb", "bcacbcddcccdadccbbc", "dcdddbcabbcddaccdda", "bdccdccdaadcdddbbdc", "ccbcbcdccbdccbbcaca", "cadcddc", "ddabdbd", "aabbdda", "bbaadcc", "cacdcac", "bbaccdbb", "ccdccbaa", "caabbcba", "cddddcbc", "c", "b", "d", "c", "ba", "bb", "bd", "cd", "ad", "acbd", "adcd", "ccab"}
 	changed := []string{"ddbccdaabbbbcbcaa", "dcbbdbbccbcbccaca", "ccadddaabdadbddbc", "dcbcbacaaccaadccb", "bddcbabcbdcbcdabd", "dcdddbcabbcddaccdda", "bdccdccdaadcdddbbdc", "ccbcbcdccbdccbbcaca", "daccdbbbdbaabdadcda", "ddabdbd", "aabbdda", "bbaadcc", "cacdcac", "ccaddda", "ccdccbaa", "caabbcba", "cddddcbc", "cacbcaab", "b", "d", "c", "d", "bb", "bd", "cd", "ad", "ac", "adcd", "ccab", "adac"}
 	cost := []int{79, 95, 77, 72, 77, 84, 65, 98, 99, 94, 87, 83, 71, 96, 77, 92, 77, 89, 99, 83, 93, 49, 94, 32, 71, 60, 83, 100, 100, 93}
-	fmt.Printf("minimumCost : %v\n", minimumCost(source, target, original, changed, cost))
+	fmt.Printf("minimumCost : %v\n", minimumCostNew(source, target, original, changed, cost))
 }
 
-func minimumCost(source string, target string, original []string, changed []string, cost []int) int64 {
+func minimumCostNew(source string, target string, original []string, changed []string, cost []int) int64 {
 	id := map[string]int{}
 	lens := map[int]bool{}
 	sz := 0
