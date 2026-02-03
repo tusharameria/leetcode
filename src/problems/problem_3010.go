@@ -6,10 +6,10 @@ import "fmt"
 
 func Problem_3010() {
 	nums := []int{10, 3, 1, 1}
-	fmt.Printf("minimumCost : %v\n", minimumCost(nums))
+	fmt.Printf("minimumCost : %v\n", minimumCostOld2(nums))
 }
 
-func minimumCost(nums []int) int {
+func minimumCostOld2(nums []int) int {
 	lens := len(nums)
 	secondMin := nums[1]
 	min := nums[2]
