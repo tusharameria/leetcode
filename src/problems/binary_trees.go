@@ -34,14 +34,14 @@ func generateBinaryTree(arr []int) *TreeNode {
 	return root
 }
 
-func generateBinarySearchTree(arr []int) *TreeNode {
-	if len(arr) == 0 {
+func generateBinarySearchTree(left, right int, arr []int) *TreeNode {
+	if left < 0 || right >= len(arr) || left > right {
 		return nil
 	}
-	mid := len(arr) / 2
+	mid := left + (right-left)/2
 	root := &TreeNode{Val: arr[mid]}
-	root.Left = generateBinarySearchTree(arr[:mid])
-	root.Right = generateBinarySearchTree(arr[mid+1:])
+	root.Left = generateBinarySearchTree(left, mid-1, arr)
+	root.Right = generateBinarySearchTree(mid+1, right, arr)
 	return root
 }
 

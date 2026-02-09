@@ -1,10 +1,5 @@
 package problems
 
-import (
-	"fmt"
-	"sort"
-)
-
 // 1382. Balance a Binary Search Tree
 
 func Problem_1382() {
@@ -16,26 +11,28 @@ func balanceBST(root *TreeNode) *TreeNode {
 	if root == nil {
 		return nil
 	}
-	res := []int{root.Val}
-	queue := []*TreeNode{root}
+	res := []*TreeNode{}
+	inOrderNode(root, &res)
 
-	for len(queue) > 0 {
-		current := queue[0]
-		queue = queue[1:]
+	return generateBinarySearchTreeNode(res)
+}
 
-		if current.Left != nil {
-			res = append(res, current.Left.Val)
-			queue = append(queue, current.Left)
-		}
-		if current.Right != nil {
-			res = append(res, current.Right.Val)
-			queue = append(queue, current.Right)
-		}
+func inOrderNode(root *TreeNode, nodes *[]*TreeNode) {
+	if root == nil {
+		return
 	}
+	inOrderNode(root.Left, nodes)
+	*nodes = append(*nodes, root)
+	inOrderNode(root.Right, nodes)
+}
 
-	fmt.Println("res : ", res)
-	sort.Ints(res)
-	fmt.Println("res : ", res)
-
-	return generateBinarySearchTree(res)
+func generateBinarySearchTreeNode(nodes []*TreeNode) *TreeNode {
+	if len(nodes) == 0 {
+		return nil
+	}
+	mid := len(nodes) / 2
+	root := nodes[mid]
+	root.Left = generateBinarySearchTreeNode(nodes[:mid])
+	root.Right = generateBinarySearchTreeNode(nodes[mid+1:])
+	return root
 }
