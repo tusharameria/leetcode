@@ -8,5 +8,5 @@ import (
 
 func main() {
 	fmt.Println("Hello World!")
-	problems.Problem_knapsack_0_1()
+	problems.Problem_3640()
 }
