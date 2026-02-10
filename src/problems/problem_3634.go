@@ -12,34 +12,17 @@ func Problem_3634() {
 
 func minRemoval(nums []int, k int) int {
 	sort.Ints(nums)
-	lens := len(nums)
+	n := len(nums)
 
-	memo := make([][]int, lens)
-	for i := 0; i <= lens-1; i++ {
-		memo[i] = make([]int, lens)
-		for j := 0; j <= lens-1; j++ {
-			memo[i][j] = -1
+	maxLen := 1
+	j := 0
+
+	for i := 0; i < n; i++ {
+		for j < n && nums[i]*k >= nums[j] {
+			j++
 		}
+		maxLen = max(maxLen, j-i)
 	}
 
-	var removeCheck func(i int, j int) int
-
-	removeCheck = func(i int, j int) int {
-		if i >= j || nums[i]*k >= nums[j] {
-			memo[i][j] = 0
-			return 0
-		}
-		firstVal := memo[i+1][j]
-		if firstVal == -1 {
-			firstVal = removeCheck(i+1, j)
-		}
-		secondVal := memo[i][j-1]
-		if secondVal == -1 {
-			secondVal = removeCheck(i, j-1)
-		}
-		finalVal := 1 + min(firstVal, secondVal)
-		memo[i][j] = finalVal
-		return finalVal
-	}
-	return removeCheck(0, lens-1)
+	return n - maxLen
 }
