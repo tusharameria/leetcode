@@ -2,7 +2,6 @@ package problems
 
 import (
 	"fmt"
-	"math"
 )
 
 func Problem_3379() {
@@ -14,17 +13,16 @@ func constructTransformedArray(nums []int) []int {
 	lens := len(nums)
 	res := make([]int, lens)
 	for i := 0; i <= lens-1; i++ {
-		if nums[i] == 0 {
-			res[i] = nums[i]
-		} else if nums[i] > 0 {
-			res[i] = nums[(i+nums[i])%lens]
-		} else {
-			index := (i - int(math.Abs(float64(nums[i])))) % lens
+		index := i
+		if nums[i] > 0 {
+			index = (i + nums[i]) % lens
+		} else if nums[i] < 0 {
+			index = (i + nums[i]) % lens
 			if index < 0 {
 				index += lens
 			}
-			res[i] = nums[index]
 		}
+		res[i] = nums[index]
 	}
 	return res
 }
