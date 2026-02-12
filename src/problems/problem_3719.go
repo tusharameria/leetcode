@@ -6,10 +6,10 @@ import "fmt"
 
 func Problem_3719() {
 	nums := []int{1, 2, 3, 2, 5}
-	fmt.Println(longestBalanced(nums))
+	fmt.Println(longestBalancedOld(nums))
 }
 
-func longestBalanced(nums []int) int {
+func longestBalancedOld(nums []int) int {
 	maxi := 0
 	for i := 0; i <= len(nums)-1-maxi; i++ {
 		evenSet := make(map[int]bool)
