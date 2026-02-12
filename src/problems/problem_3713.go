@@ -10,22 +10,27 @@ func Problem_3713() {
 }
 
 func longestBalanced(s string) int {
-	res := 1
+	res := 0
 	lens := len(s)
 	for i := 0; i <= lens-1-res; i++ {
-		letterCounts := make(map[byte]int)
-		letterCounts[s[i]]++
-		for j := i + 1; j <= lens-1; j++ {
-			letterCounts[s[j]]++
-			val := letterCounts[s[j]]
-			allEqual := true
-			for _, count := range letterCounts {
-				if count != val {
-					allEqual = false
-					break
-				}
+		letterFreq := make([]int, 26)
+		distinctCount := 0
+		maxFreq := 0
+		elementsWithMaxFreq := 0
+		for j := i; j <= lens-1; j++ {
+			index := int(s[j] - 'a')
+			letterFreq[index]++
+			if letterFreq[index] == 1 {
+				distinctCount++
 			}
-			if allEqual && j-i+1 > res {
+			if letterFreq[index] == maxFreq {
+				elementsWithMaxFreq++
+			}
+			if letterFreq[index] > maxFreq {
+				maxFreq = letterFreq[index]
+				elementsWithMaxFreq = 1
+			}
+			if distinctCount == elementsWithMaxFreq && j-i+1 > res {
 				res = j - i + 1
 			}
 		}
