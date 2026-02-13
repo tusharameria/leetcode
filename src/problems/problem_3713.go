@@ -6,10 +6,10 @@ import "fmt"
 
 func Problem_3713() {
 	s := "aabbccccdddd"
-	fmt.Println("res : ", longestBalanced(s))
+	fmt.Println("res : ", longestBalancedOld3(s))
 }
 
-func longestBalanced(s string) int {
+func longestBalancedOld3(s string) int {
 	res := 0
 	lens := len(s)
 	for i := 0; i <= lens-1-res; i++ {
