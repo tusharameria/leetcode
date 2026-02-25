@@ -9,11 +9,13 @@ import (
 // 761. Special Binary String
 
 func Problem_761() {
-	s := "11011000"
+	s := "110111001000"
 	fmt.Println("res : ", makeLargestSpecial(s))
 }
 
 func makeLargestSpecial(s string) string {
+	fmt.Println("================")
+	fmt.Printf("s : %s\n", s)
 	if len(s) <= 2 {
 		return s
 	}
@@ -37,9 +39,11 @@ func makeLargestSpecial(s string) string {
 		}
 	}
 
+	fmt.Printf("final : %s\n", parts)
 	sort.Slice(parts, func(i, j int) bool {
 		return parts[i] > parts[j] // descending
 	})
+	fmt.Println()
 
 	return strings.Join(parts, "")
 }
