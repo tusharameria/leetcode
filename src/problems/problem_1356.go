@@ -1,9 +1,10 @@
 package problems
 
 import (
+	"cmp"
 	"fmt"
 	"math/bits"
-	"sort"
+	"slices"
 )
 
 // 1356. Sort Integers by The Number of 1 Bits
@@ -14,13 +15,13 @@ func Problem_1356() {
 }
 
 func sortByBits(arr []int) []int {
-	sort.Slice(arr, func(i, j int) bool {
-		iCount := bits.OnesCount(uint(arr[i]))
-		jCount := bits.OnesCount(uint(arr[j]))
+	slices.SortFunc(arr, func(a, b int) int {
+		iCount := bits.OnesCount(uint(a))
+		jCount := bits.OnesCount(uint(b))
 		if iCount == jCount {
-			return arr[i] < arr[j]
+			return cmp.Compare(a, b)
 		}
-		return iCount < jCount
+		return cmp.Compare(iCount, jCount)
 	})
 	return arr
 }
