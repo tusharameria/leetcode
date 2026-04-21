@@ -11,15 +11,17 @@ func Problem_3488() {
 }
 
 func solveQueries(nums []int, queries []int) []int {
+	res := make([]int, len(queries))
 	freqMap := make(map[int][]int)
+	posIndex := make([]int, len(nums))
 	for i := 0; i <= len(nums)-1; i++ {
 		freqMap[nums[i]] = append(freqMap[nums[i]], i)
+		posIndex[i] = len(freqMap[nums[i]]) - 1
 	}
 
-	res := make([]int, len(queries))
 	for i := 0; i <= len(queries)-1; i++ {
 		if len(freqMap[nums[queries[i]]]) > 1 {
-			currentIndex := findIndex(freqMap[nums[queries[i]]], queries[i])
+			currentIndex := posIndex[queries[i]]
 			if currentIndex == -1 {
 				res[i] = -1
 			} else {
@@ -36,20 +38,4 @@ func solveQueries(nums []int, queries []int) []int {
 		}
 	}
 	return res
-}
-
-func findIndex(arr []int, target int) int {
-	start := 0
-	end := len(arr) - 1
-	for start <= end {
-		mid := (start + end) / 2
-		if arr[mid] == target {
-			return mid
-		} else if arr[mid] < target {
-			start = mid + 1
-		} else {
-			end = mid - 1
-		}
-	}
-	return -1
 }
