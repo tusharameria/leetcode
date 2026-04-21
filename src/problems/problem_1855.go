@@ -7,10 +7,10 @@ import "fmt"
 func Problem_1855() {
 	nums1 := []int{55, 30, 5, 4, 2}
 	nums2 := []int{100, 20, 10, 10, 5}
-	fmt.Println(maxDistance(nums1, nums2))
+	fmt.Println(maxDistanceOld(nums1, nums2))
 }
 
-func maxDistance(nums1 []int, nums2 []int) int {
+func maxDistanceOld(nums1 []int, nums2 []int) int {
 	len1 := len(nums1)
 	len2 := len(nums2)
 	distance := 0
