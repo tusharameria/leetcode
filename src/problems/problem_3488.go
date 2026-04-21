@@ -11,28 +11,45 @@ func Problem_3488() {
 }
 
 func solveQueries(nums []int, queries []int) []int {
+	freqMap := make(map[int][]int)
+	for i := 0; i <= len(nums)-1; i++ {
+		freqMap[nums[i]] = append(freqMap[nums[i]], i)
+	}
+
 	res := make([]int, len(queries))
 	for i := 0; i <= len(queries)-1; i++ {
-		res[i] = findClosest(nums, queries[i])
+		if len(freqMap[nums[queries[i]]]) > 1 {
+			currentIndex := findIndex(freqMap[nums[queries[i]]], queries[i])
+			if currentIndex == -1 {
+				res[i] = -1
+			} else {
+				freqLen := len(freqMap[nums[queries[i]]])
+				prevIndex := (currentIndex - 1 + freqLen) % freqLen
+				nextIndex := (currentIndex + 1) % freqLen
+				currentVal := freqMap[nums[queries[i]]][currentIndex]
+				prevVal := freqMap[nums[queries[i]]][prevIndex]
+				nextVal := freqMap[nums[queries[i]]][nextIndex]
+				res[i] = min(min(abs(currentVal-prevVal), len(nums)-abs(currentVal-prevVal)), min(abs(currentVal-nextVal), len(nums)-abs(currentVal-nextVal)))
+			}
+		} else {
+			res[i] = -1
+		}
 	}
 	return res
 }
 
-func findClosest(nums []int, startIndex int) int {
-	distance := -1
-	for i := 0; i <= len(nums)-1; i++ {
-		if i != startIndex {
-			if nums[i] == nums[startIndex] {
-				if distance == -1 {
-					distance = min(abs(i-startIndex), len(nums)-abs(i-startIndex))
-				} else {
-					distance = min(distance, min(abs(i-startIndex), len(nums)-abs(i-startIndex)))
-				}
-				if distance == 1 {
-					return 1
-				}
-			}
+func findIndex(arr []int, target int) int {
+	start := 0
+	end := len(arr) - 1
+	for start <= end {
+		mid := (start + end) / 2
+		if arr[mid] == target {
+			return mid
+		} else if arr[mid] < target {
+			start = mid + 1
+		} else {
+			end = mid - 1
 		}
 	}
-	return distance
+	return -1
 }
