@@ -13,14 +13,13 @@ func judgeCircle(moves string) bool {
 	vertical := 0
 	horizontal := 0
 	for _, move := range moves {
-		switch move {
-		case 'U':
+		if move == 'U' {
 			vertical++
-		case 'D':
+		} else if move == 'D' {
 			vertical--
-		case 'L':
+		} else if move == 'L' {
 			horizontal++
-		case 'R':
+		} else {
 			horizontal--
 		}
 	}
