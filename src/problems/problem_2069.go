@@ -13,8 +13,8 @@ type Robot struct {
 
 func Constructor(width int, height int) Robot {
 	return Robot{
-		X:         0,
-		Y:         0,
+		X:         2,
+		Y:         9,
 		Direction: 0,
 		Width:     width,
 		Height:    height,
@@ -22,6 +22,25 @@ func Constructor(width int, height int) Robot {
 }
 
 func (this *Robot) Step(num int) {
+	perim := 2*(this.Width+this.Height) - 4
+	if num >= perim {
+		num = num % perim
+	}
+	if num == 0 {
+		if this.X == 0 && this.Y == 0 {
+			this.Direction = 3
+		}
+		if this.X == 0 && this.Y == this.Height-1 {
+			this.Direction = 2
+		}
+		if this.X == this.Width-1 && this.Y == this.Height-1 {
+			this.Direction = 1
+		}
+		if this.X == this.Width-1 && this.Y == 0 {
+			this.Direction = 0
+		}
+		return
+	}
 	for num > 0 {
 		rem := this.Direction % 2
 		div := this.Direction / 2
