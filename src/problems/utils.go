@@ -66,6 +66,39 @@ func BinarySearchInt(nums []int, val int) int {
 	return -1
 }
 
+func BinarySearchIntRange(nums []int, val int) (int, int) {
+	// this assumes nums is sorted in ascending order
+	n := len(nums)
+	left := 0
+	right := n - 1
+	if val < nums[left] {
+		return -1, 0
+	}
+	if val > nums[right] {
+		return n - 1, n
+	}
+	for left < right {
+		mid := left + (right-left+1)/2
+		if nums[mid] == val {
+			return mid - 1, mid + 1
+		} else if nums[mid] > val {
+			right = mid
+		} else {
+			left = mid
+		}
+		if left == right-1 {
+			if nums[left] == val {
+				return left - 1, left + 1
+			} else if nums[right] == val {
+				return right - 1, right + 1
+			} else {
+				return left, right
+			}
+		}
+	}
+	return left - 1, left + 1
+}
+
 func GenerateBitArrayFromInt(n int) []int {
 	if n == 0 {
 		return []int{0}
