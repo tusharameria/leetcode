@@ -24,112 +24,57 @@ func Problem_2069() {
 }
 
 type Robot struct {
-	X int
-	Y int
-	// 0 : East, 1 : North, 2 : West, 3 : South
-	Direction int
-	Width     int
-	Height    int
+	id          int
+	moved       bool
+	pos         [][2]int
+	direction   []int // 0 : East, 1 : North, 2 : West, 3 : South
+	toDirection map[int]string
 }
 
 func Constructor(width int, height int) Robot {
-	return Robot{
-		X:         0,
-		Y:         0,
-		Direction: 0,
-		Width:     width,
-		Height:    height,
+	robo := Robot{
+		toDirection: map[int]string{
+			0: "East",
+			1: "North",
+			2: "West",
+			3: "South",
+		},
 	}
+
+	for i := 0; i < width; i++ {
+		robo.pos = append(robo.pos, [2]int{i, 0})
+		robo.direction = append(robo.direction, 0)
+	}
+	for i := 1; i < height; i++ {
+		robo.pos = append(robo.pos, [2]int{width - 1, i})
+		robo.direction = append(robo.direction, 1)
+	}
+	for i := width - 2; i >= 0; i-- {
+		robo.pos = append(robo.pos, [2]int{i, height - 1})
+		robo.direction = append(robo.direction, 2)
+	}
+	for i := height - 2; i > 0; i-- {
+		robo.pos = append(robo.pos, [2]int{0, i})
+		robo.direction = append(robo.direction, 3)
+	}
+	robo.direction[0] = 3
+	return robo
 }
 
 func (this *Robot) Step(num int) {
-	perim := 2*(this.Width+this.Height) - 4
-	if num >= perim {
-		num = num % perim
-	}
-	if num == 0 {
-		if this.X == 0 && this.Y == 0 {
-			this.Direction = 3
-		}
-		if this.X == 0 && this.Y == this.Height-1 {
-			this.Direction = 2
-		}
-		if this.X == this.Width-1 && this.Y == this.Height-1 {
-			this.Direction = 1
-		}
-		if this.X == this.Width-1 && this.Y == 0 {
-			this.Direction = 0
-		}
-		return
-	}
-	for num > 0 {
-		rem := this.Direction % 2
-		div := this.Direction / 2
-		if rem == 0 {
-			// Moving in X direction
-			if div == 0 {
-				// Moving in positive X direction
-				if num > this.Width-1-this.X {
-					num -= this.Width - 1 - this.X
-					this.X = this.Width - 1
-					this.Direction = (this.Direction + 1) % 4
-					fmt.Printf("num : %d, X : %d, Direction : %d\n", num, this.X, this.Direction)
-					continue
-				}
-				this.X += num
-				return
-			} else {
-				// Moving in negative X direction
-				if num > this.X {
-					num -= this.X
-					this.X = 0
-					this.Direction = (this.Direction + 1) % 4
-					continue
-				}
-				this.X -= num
-				return
-			}
-		} else {
-			// Moving in Y direction
-			if div == 0 {
-				// Moving in positive Y direction
-				if num > this.Height-1-this.Y {
-					num -= this.Height - 1 - this.Y
-					this.Y = this.Height - 1
-					this.Direction = (this.Direction + 1) % 4
-					continue
-				}
-				this.Y += num
-				return
-			} else {
-				// Moving in negative Y direction
-				if num > this.Y {
-					num -= this.Y
-					this.Y = 0
-					this.Direction = (this.Direction + 1) % 4
-					continue
-				}
-				this.Y -= num
-				return
-			}
-		}
-	}
+	this.moved = true
+	this.id = (this.id + num) % len(this.pos)
 }
 
 func (this *Robot) GetPos() []int {
-	return []int{this.X, this.Y}
+	return []int{this.pos[this.id][0], this.pos[this.id][1]}
 }
 
 func (this *Robot) GetDir() string {
-	if this.Direction == 0 {
+	if !this.moved {
 		return "East"
-	} else if this.Direction == 1 {
-		return "North"
-	} else if this.Direction == 2 {
-		return "West"
-	} else {
-		return "South"
 	}
+	return this.toDirection[this.direction[this.id]]
 }
 
 /**
