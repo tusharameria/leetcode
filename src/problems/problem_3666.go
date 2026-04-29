@@ -7,10 +7,10 @@ import "fmt"
 func Problem_3666() {
 	s := "0101"
 	k := 3
-	fmt.Println("res : ", minOperations(s, k))
+	fmt.Println("res : ", minOperations3666(s, k))
 }
 
-func minOperations(s string, k int) int {
+func minOperations3666(s string, k int) int {
 	zero := 0
 	one := 0
 	totalCount := len(s)
