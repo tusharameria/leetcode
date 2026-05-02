@@ -16,7 +16,6 @@ func rotatedDigits(n int) int {
 		isSame := true
 		num := i
 		for num > 0 {
-			fmt.Printf("num : %d\n", num)
 			digit := num % 10
 			num /= 10
 			good, same := isAGoodInteger(digit)
