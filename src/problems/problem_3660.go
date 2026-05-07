@@ -10,45 +10,23 @@ func Problem_3660() {
 }
 
 func maxValue(nums []int) []int {
-	numLen := len(nums)
-	res := make([]int, numLen)
-	minArray := make([]int, numLen)
-	maxArray := make([]int, numLen)
-	maxMap := make(map[int]int)
-	minArray[numLen-1] = nums[numLen-1]
-	maxArray[0] = nums[0]
-	for i := 1; i < numLen; i++ {
-		maxArray[i] = max(maxArray[i-1], nums[i])
-		minArray[numLen-1-i] = min(minArray[numLen-i], nums[numLen-1-i])
+	n := len(nums)
+	mmax := 0
+	mmin := int(^uint(0) >> 1)
+	ans := make([]int, n)
+	for i := 0; i < n; i++ {
+		if nums[i] > mmax {
+			mmax = nums[i]
+		}
+		ans[i] = mmax
 	}
-	for i := range nums {
-		currentVal := nums[i]
-		minVal := minArray[i]
-		maxVal := maxArray[i]
-		if currentVal == minVal && currentVal == maxVal {
-			res[i] = maxVal
-		} else {
-			if maxMap[maxVal] > 0 {
-				res[i] = maxMap[maxVal]
-				continue
-			}
-			tempArr := []int{maxVal}
-			tempMaxVal := maxVal
-			nextMaxVal := maxArray[BinarySearchIntRangeLeft(minArray, tempMaxVal)]
-			if tempMaxVal != nextMaxVal {
-				tempArr = append(tempArr, nextMaxVal)
-			}
-			for nextMaxVal > tempMaxVal {
-				newIndex := BinarySearchIntRangeLeft(maxArray, nextMaxVal) + 1
-				tempMaxVal = maxArray[newIndex]
-				nextMaxVal = maxArray[BinarySearchIntRangeLeft(minArray, tempMaxVal)]
-				tempArr = append(tempArr, nextMaxVal)
-			}
-			res[i] = nextMaxVal
-			for _, val := range tempArr {
-				maxMap[val] = nextMaxVal
-			}
+	for i := n - 1; i >= 0; i-- {
+		if ans[i] > mmin {
+			ans[i] = ans[i+1]
+		}
+		if nums[i] < mmin {
+			mmin = nums[i]
 		}
 	}
-	return res
+	return ans
 }
