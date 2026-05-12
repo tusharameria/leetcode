@@ -4,34 +4,44 @@ package problems
 
 import (
 	"fmt"
-	"sort"
 )
 
 func Problem_1665() {
 	tasks := [][]int{
-		{1, 2},
-		{2, 4},
-		{4, 8},
+		{1, 1},
+		{1, 3},
 	}
 	fmt.Println(minimumEffort(tasks))
 }
 
 func minimumEffort(tasks [][]int) int {
-	sort.Slice(tasks, func(i, j int) bool {
-		return (tasks[i][1] - tasks[i][0]) >= (tasks[j][1] - tasks[j][0])
-	})
-	fmt.Println(tasks)
-	minEnergy := tasks[0][1]
-	remEnergy := minEnergy - tasks[0][0]
-	for i := 1; i < len(tasks); i++ {
-		expendedEnergy := tasks[i][0]
-		requiredEnergy := tasks[i][1]
-		if remEnergy >= requiredEnergy {
-			remEnergy -= expendedEnergy
+	diffArr := [10000]int{}
+	for _, task := range tasks {
+		actualEnergy := task[0]
+		minEnergy := task[1]
+		diff := minEnergy - actualEnergy
+		diffArr[diff] += actualEnergy
+	}
+
+	minEnergy := 0
+	overflow := 9999
+	for {
+		if diffArr[overflow] > 0 {
+			minEnergy = diffArr[overflow]
+			break
+		}
+		overflow--
+	}
+
+	for i := overflow - 1; i >= 0; i-- {
+		currentEnergy := diffArr[i]
+		minEnergy += currentEnergy
+		if currentEnergy+i >= overflow {
+			overflow = i
 		} else {
-			minEnergy += requiredEnergy - remEnergy
-			remEnergy = requiredEnergy - expendedEnergy
+			overflow -= currentEnergy
 		}
 	}
-	return minEnergy
+
+	return minEnergy + overflow
 }
