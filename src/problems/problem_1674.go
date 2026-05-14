@@ -13,42 +13,19 @@ func Problem_1674() {
 }
 
 func minMoves(nums []int, limit int) int {
-	minSum := 0
-	maxSum := 0
-	for i := 0; i < len(nums)/2; i++ {
-		sum := nums[i] + nums[len(nums)-1-i]
-		minSum = min(minSum, sum)
-		maxSum = max(maxSum, sum)
+	n := len(nums)
+	diff := make([]int, 2*limit+2)
+	for i := range n / 2 {
+		a, b := nums[i], nums[n-1-i]
+		diff[min(a, b)+1]--
+		diff[a+b]--
+		diff[a+b+1]++
+		diff[max(a, b)+limit+1]++
 	}
-	if minSum == maxSum {
-		return 0
+	moves, sum := n, n
+	for i := 2; i <= 2*limit; i++ {
+		sum += diff[i]
+		moves = min(moves, sum)
 	}
-	counts := make([]int, maxSum-minSum+1)
-
-	for i := 0; i < len(nums)/2; i++ {
-		minNum := min(nums[i], nums[len(nums)-1-i])
-		maxNum := max(nums[i], nums[len(nums)-1-i])
-		sum := nums[i] + nums[len(nums)-1-i]
-		// min with 1 change
-		min1Change := minNum + 1
-		max1Change := maxNum + limit
-		if minNum >= minSum {
-			counts[0] += 2
-			counts[min1Change-minSum] -= 2
-		}
-		counts[max(0, min1Change-minSum)] += 1
-		if max1Change+1 <= maxSum {
-			counts[max1Change+1-minSum] += 1
-		}
-		counts[sum-minSum] -= 1
-		if sum != maxSum {
-			counts[sum+1-minSum] += 1
-		}
-	}
-	res := counts[0]
-	for i := 1; i < len(counts); i++ {
-		counts[i] += counts[i-1]
-		res = min(res, counts[i])
-	}
-	return res
+	return moves
 }
