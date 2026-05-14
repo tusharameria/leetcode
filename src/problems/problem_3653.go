@@ -8,10 +8,10 @@ func Problem_3653() {
 		{1, 4, 2, 3},
 		{0, 2, 1, 2},
 	}
-	println(xorAfterQueries(nums, queries))
+	println(xorAfterQueriesOld(nums, queries))
 }
 
-func xorAfterQueries(nums []int, queries [][]int) int {
+func xorAfterQueriesOld(nums []int, queries [][]int) int {
 	res := 0
 	divider := 1000000007
 	for i := range queries {

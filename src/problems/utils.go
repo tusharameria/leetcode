@@ -66,8 +66,12 @@ func BinarySearchInt(nums []int, val int) int {
 	return -1
 }
 
+// This assumes nums is sorted in ascending order
+// Case I : If val is present in nums, then returns the indices of the first and last occurrence of val in nums
+// Case II : If val is not present in nums, then returns the indices of the first element smaller than val and the first element greater than val in nums
+// Case III : If val is smaller than all elements in nums, then returns -1 and 0
+// Case IV : If val is greater than all elements in nums, then returns n-1 and n
 func BinarySearchIntRange(nums []int, val int) (int, int) {
-	// this assumes nums is sorted in ascending order
 	n := len(nums)
 	left := 0
 	right := n - 1
@@ -97,6 +101,33 @@ func BinarySearchIntRange(nums []int, val int) (int, int) {
 		}
 	}
 	return left - 1, left + 1
+}
+
+func BinarySearchIntRangeLeft(nums []int, val int) int {
+	n := len(nums)
+	left := 0
+	right := n - 1
+	if val <= nums[left] {
+		return -1
+	}
+	if val > nums[right] {
+		return n - 1
+	}
+	for left < right {
+		diff := right - left
+		if diff == 1 {
+			return left
+		} else {
+			mid := left + (diff+1)/2
+			currentVal := nums[mid]
+			if currentVal >= val {
+				right = mid
+			} else {
+				left = mid
+			}
+		}
+	}
+	return -1
 }
 
 func GenerateBitArrayFromInt(n int) []int {

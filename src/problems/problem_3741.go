@@ -6,10 +6,10 @@ import "fmt"
 
 func Problem_3741() {
 	nums := []int{1, 2, 3, 4, 5, 1, 2, 3, 4, 5}
-	fmt.Println(minimumDistance(nums))
+	fmt.Println(minimumDistanceOld2(nums))
 }
 
-func minimumDistance(nums []int) int {
+func minimumDistanceOld2(nums []int) int {
 	numsLen := len(nums)
 	distance := 2*(numsLen-1) + 1
 	tupleArray := make([][]int, numsLen+1)
