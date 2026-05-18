@@ -8,10 +8,10 @@ import (
 
 func Problem_153() {
 	nums := []int{4, 5, 6, 7, 0, 1, 2}
-	fmt.Println(findMin(nums))
+	fmt.Println(findMinDistinct(nums))
 }
 
-func findMin(nums []int) int {
+func findMinDistinct(nums []int) int {
 	n := len(nums)
 	left := 0
 	right := n - 1

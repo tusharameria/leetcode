@@ -6,10 +6,10 @@ import "fmt"
 
 func Problem_3629() {
 	nums := []int{10}
-	fmt.Println(minJumps(nums))
+	fmt.Println(minJumpsOld(nums))
 }
 
-func minJumps(nums []int) int {
+func minJumpsOld(nums []int) int {
 	n := len(nums)
 	if n <= 2 {
 		return n - 1
