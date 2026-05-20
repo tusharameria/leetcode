@@ -17,40 +17,39 @@ func canPartitionGrid(grid [][]int) bool {
 	if height == 1 && width == 1 {
 		return false
 	}
-	rowSums := make([]int, height)
-	for j := 0; j < width; j++ {
-		rowSums[0] += grid[0][j]
-	}
-	for i := 1; i < height; i++ {
-		for j := 0; j < width; j++ {
-			rowSums[i] += grid[i][j]
-		}
-		rowSums[i] += rowSums[i-1]
-	}
-	sum := rowSums[height-1]
-	if sum%2 != 0 {
-		return false
-	}
-	colSums := make([]int, width)
+	sum := 0
 	for i := 0; i < height; i++ {
-		colSums[0] += grid[i][0]
+		for j := 0; j < width; j++ {
+			sum += grid[i][j]
+		}
 	}
-	if colSums[0]*2 == sum {
-		return true
+
+	currSum := 0
+
+	for i := 0; i < height; i++ {
+		for j := 0; j < width; j++ {
+			currSum += grid[i][j]
+		}
+		if currSum*2 >= sum {
+			if currSum*2 == sum {
+				return true
+			}
+			currSum = 0
+			break
+		}
 	}
-	for j := 1; j < width-1; j++ {
+
+	for j := 0; j < width; j++ {
 		for i := 0; i < height; i++ {
-			colSums[j] += grid[i][j]
+			currSum += grid[i][j]
 		}
-		colSums[j] += colSums[j-1]
-		if colSums[j]*2 == sum {
-			return true
-		}
-	}
-	for i := 0; i < height-1; i++ {
-		if rowSums[i]*2 == sum {
-			return true
+		if currSum*2 >= sum {
+			if currSum*2 == sum {
+				return true
+			}
+			return false
 		}
 	}
+
 	return false
 }
