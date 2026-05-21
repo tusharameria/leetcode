@@ -14,7 +14,7 @@ func longestCommonPrefix(arr1 []int, arr2 []int) int {
 	len1 := len(arr1)
 	len2 := len(arr2)
 
-	store := make(map[int]bool)
+	store := make(map[int]bool, min(len1, len2)*4)
 	maxVal := 0
 	if len1 < len2 {
 		for i := 0; i < len1; i++ {
