@@ -4,10 +4,10 @@ import "fmt"
 
 func Problem_14() {
 	strs := []string{}
-	fmt.Println(longestCommonPrefix(strs))
+	fmt.Println(longestCommonPrefixOld(strs))
 }
 
-func longestCommonPrefix(strs []string) string {
+func longestCommonPrefixOld(strs []string) string {
 	res := ""
 	for i := 0; i <= len(strs[0])-1; i++ {
 		for j := 0; j <= len(strs)-1; j++ {

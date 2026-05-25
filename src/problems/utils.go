@@ -153,3 +153,45 @@ func PowInt(base, exp int) int {
 	}
 	return result
 }
+
+func LeftMostIndex(nums []int, val int) int {
+	// fmt.Println("LeftMostIndex")
+	// fmt.Println(val)
+	// fmt.Println(nums)
+	n := len(nums)
+	left := 0
+	right := n - 1
+	for left < right {
+		mid := left + (right-left)/2
+		midVal := nums[mid]
+		if midVal == val {
+			return mid
+		} else if midVal < val {
+			left = mid + 1
+		} else {
+			right = mid
+		}
+	}
+	return left
+}
+
+func RightMostIndex(nums []int, val int) int {
+	// fmt.Println("RightMostIndex")
+	// fmt.Println(val)
+	// fmt.Println(nums)
+	n := len(nums)
+	left := 0
+	right := n - 1
+	for left < right {
+		mid := left + (right-left+1)/2
+		midVal := nums[mid]
+		if midVal == val {
+			return mid
+		} else if midVal < val {
+			left = mid
+		} else {
+			right = mid - 1
+		}
+	}
+	return left
+}

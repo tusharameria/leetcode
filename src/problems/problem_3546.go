@@ -8,20 +8,25 @@ func Problem_3546() {
 	grid := [][]int{
 		{54756, 54756},
 	}
-	fmt.Println(canPartitionGrid(grid))
+	fmt.Println(canPartitionGridOld(grid))
 }
 
-func canPartitionGrid(grid [][]int) bool {
+func canPartitionGridOld(grid [][]int) bool {
 	height := len(grid)
 	width := len(grid[0])
 	if height == 1 && width == 1 {
 		return false
 	}
+
 	sum := 0
 	for i := 0; i < height; i++ {
 		for j := 0; j < width; j++ {
 			sum += grid[i][j]
 		}
+	}
+
+	if sum%2 == 1 {
+		return false
 	}
 
 	currSum := 0
