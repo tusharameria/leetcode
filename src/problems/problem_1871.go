@@ -13,32 +13,19 @@ func Problem_1871() {
 
 func canReach(s string, minJump int, maxJump int) bool {
 	n := len(s)
-	// fmt.Println(n)
-	if s[n-1] != '0' {
-		return false
-	}
-
-	dp := make([]bool, n)
-	dp[n-1] = true
-
-	i := n - 1 - minJump
-	limit := max(0, n-1-maxJump)
-	for ; i >= limit; i-- {
+	v := make([]bool, n)
+	v[0] = true
+	c := 1
+	for i := minJump; i < n; i++ {
 		if s[i] == '0' {
-			dp[i] = true
+			v[i] = c > 0
+		}
+		if v[i-minJump+1] {
+			c++
+		}
+		if i >= maxJump && v[i-maxJump] {
+			c--
 		}
 	}
-
-	for ; i >= 0; i-- {
-		if s[i] == '0' {
-			for j := i + minJump; j <= i+maxJump; j++ {
-				if dp[j] {
-					dp[i] = true
-					break
-				}
-			}
-		}
-	}
-
-	return dp[0]
+	return v[n-1]
 }
