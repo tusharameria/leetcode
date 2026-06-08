@@ -7,10 +7,10 @@ import "fmt"
 func Problem_1306() {
 	arr := []int{4, 2, 3, 0, 3, 1, 2}
 	start := 5
-	fmt.Println(canReach(arr, start))
+	fmt.Println(canReachOld(arr, start))
 }
 
-func canReach(arr []int, start int) bool {
+func canReachOld(arr []int, start int) bool {
 	const SENTINEL = 99999999
 	n := len(arr)
 	store := make([]int, 1)

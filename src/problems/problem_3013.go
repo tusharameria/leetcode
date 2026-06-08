@@ -21,10 +21,10 @@ func Problem_3013() {
 	nums := []int{1, 5, 3, 7}
 	k := 3
 	dist := 1
-	fmt.Printf("minimumCost : %d\n", minimumCost(nums, k, dist))
+	fmt.Printf("minimumCost : %d\n", minimumCostOldOld(nums, k, dist))
 }
 
-func minimumCost(nums []int, k int, dist int) int64 {
+func minimumCostOldOld(nums []int, k int, dist int) int64 {
 	cost := 0
 	i := 1
 	countMap := make(map[int]int)
