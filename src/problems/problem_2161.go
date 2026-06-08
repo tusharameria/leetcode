@@ -12,22 +12,27 @@ func Problem_2161() {
 
 func pivotArray(nums []int, pivot int) []int {
 	n := len(nums)
-	smallRes := make([]int, n)
-	sameRes := make([]int, n)
-	largeRes := make([]int, n)
-	smallCount, sameCount, largeCount := 0, 0, 0
+	res := make([]int, n)
+	smallCount := 0
+	largeCount := n - 1
 
-	for _, val := range nums {
-		if val < pivot {
-			smallRes[smallCount] = val
+	for i := 0; i < n; i++ {
+		smallVal := nums[i]
+		largeVal := nums[n-1-i]
+		if smallVal < pivot {
+			res[smallCount] = smallVal
 			smallCount++
-		} else if val == pivot {
-			sameRes[sameCount] = val
-			sameCount++
-		} else {
-			largeRes[largeCount] = val
-			largeCount++
+		}
+		if largeVal > pivot {
+			res[largeCount] = largeVal
+			largeCount--
 		}
 	}
-	return append(smallRes[:smallCount], append(sameRes[:sameCount], largeRes[:largeCount]...)...)
+
+	for smallCount <= largeCount {
+		res[smallCount] = pivot
+		smallCount++
+	}
+
+	return res
 }
