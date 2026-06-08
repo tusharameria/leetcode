@@ -20,47 +20,26 @@ func Problem_2196() {
 func createBinaryTree(descriptions [][]int) *TreeNode {
 	n := len(descriptions)
 	store := make(map[int]*TreeNode)
-	parents := make(map[int]int)
-	parent, child, isLeft := descriptions[0][0], descriptions[0][1], descriptions[0][2]
-	parentNode := &TreeNode{
-		Val: parent,
-	}
-	childNode := &TreeNode{
-		Val: child,
-	}
-	if isLeft == 1 {
-		parentNode.Left = childNode
-	} else {
-		parentNode.Right = childNode
-	}
-	root := parentNode
-	if n == 1 {
-		return root
-	}
 
-	store[parent] = parentNode
-	store[child] = childNode
-	parents[child] = parent
+	root := 0
 
-	lastParent := parent
-
-	for i := 1; i < n; i++ {
-		parent, child, isLeft = descriptions[i][0], descriptions[i][1], descriptions[i][2]
-		parentNode, parentNodePresent := store[parent]
-		childNode, childNodePresent := store[child]
-
-		if !parentNodePresent {
+	for i := 0; i < n; i++ {
+		parent, child, isLeft := descriptions[i][0], descriptions[i][1], descriptions[i][2]
+		parentNode, ok := store[parent]
+		if !ok {
 			parentNode = &TreeNode{
 				Val: parent,
 			}
 			store[parent] = parentNode
+			root += parent
 		}
-
-		if !childNodePresent {
+		childNode, ok := store[child]
+		if !ok {
 			childNode = &TreeNode{
 				Val: child,
 			}
 			store[child] = childNode
+			root += child
 		}
 
 		if isLeft == 1 {
@@ -68,20 +47,9 @@ func createBinaryTree(descriptions [][]int) *TreeNode {
 		} else {
 			parentNode.Right = childNode
 		}
-		parents[child] = parent
-		lastParent = parent
+
+		root -= child
 	}
 
-	root = store[lastParent]
-
-	for {
-		val := parents[lastParent]
-		if val == 0 {
-			break
-		}
-		root = store[val]
-		lastParent = val
-	}
-
-	return root
+	return store[root]
 }
