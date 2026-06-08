@@ -19,8 +19,8 @@ func Problem_2196() {
 
 func createBinaryTree(descriptions [][]int) *TreeNode {
 	n := len(descriptions)
-	store := make(map[int]*TreeNode, 10_000)
-	parents := make(map[int]int, 1_00_000)
+	store := make(map[int]*TreeNode)
+	parents := make(map[int]int)
 	parent, child, isLeft := descriptions[0][0], descriptions[0][1], descriptions[0][2]
 	parentNode := &TreeNode{
 		Val: parent,
