@@ -4,6 +4,7 @@ package problems
 
 import (
 	"fmt"
+	"sort"
 )
 
 func Problem_3558() {
@@ -11,41 +12,33 @@ func Problem_3558() {
 	fmt.Println(edges)
 }
 
+const MOD = 1_000_000_007
+
+var depth [100_001]uint32
+
 func assignEdgeWeights(edges [][]int) int {
-	n := len(edges) + 1
-	graph := make([][]int, n+1)
-
+	sort.Slice(edges, func(i, j int) bool {
+		return edges[i][0] < edges[j][0]
+	})
+	maxDepth := uint32(0)
 	for _, e := range edges {
-		graph[e[0]] = append(graph[e[0]], e[1])
-		graph[e[1]] = append(graph[e[1]], e[0])
+		parent := min(e[0], e[1])
+		child := max(e[0], e[1])
+		depth[child] = depth[parent] + 1
+		maxDepth = max(maxDepth, depth[child])
 	}
-
-	var dfs func(node, prev int) int
-
-	dfs = func(node, prev int) int {
-		dist := 0
-		for _, val := range graph[node] {
-			if val != prev {
-				dist = max(dist, dfs(val, node)+1)
-			}
-		}
-		return dist
-	}
-
-	return pow(2, dfs(1, 0)-1)
+	return pow2(maxDepth - 1)
 }
 
-func pow(base, exp int) int {
-	const mod = 1_000_000_007
-	res := 1
-
-	for exp > 0 {
-		if exp%2 > 0 {
-			res = res * base % mod
+func pow2(n uint32) int {
+	result := 1
+	base := 2
+	for n > 0 {
+		if n&1 == 1 {
+			result = result * base % MOD
 		}
-		base = base * base % mod
-		exp /= 2
+		base = base * base % MOD
+		n >>= 1
 	}
-
-	return res
+	return result
 }
