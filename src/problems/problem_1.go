@@ -23,24 +23,28 @@ func twoSumBrute(nums []int, target int) []int {
 }
 
 func twoSumEff(nums []int, target int) []int {
-	numsBuff := []int{}
-	for i := 0; i <= len(nums)-1; i++ {
-		numsBuff = append(numsBuff, nums[i])
+	type NumInfo struct {
+		num int
+		idx int
 	}
-	sort.Ints(nums)
+	n := len(nums)
+	numsInfo := make([]NumInfo, n)
+	for i, val := range nums {
+		numsInfo[i] = NumInfo{
+			num: val,
+			idx: i,
+		}
+	}
+	sort.Slice(numsInfo, func(i, j int) bool {
+		return numsInfo[i].num < numsInfo[j].num
+	})
 	i, j := 0, len(nums)-1
 	for i < j {
-		if nums[i]+nums[j] == target {
-			res := []int{}
-			fmt.Println(numsBuff)
-			for a := 0; a <= len(numsBuff)-1; a++ {
-				if nums[i] == numsBuff[a] || nums[j] == numsBuff[a] {
-					res = append(res, a)
-				}
-			}
-			return res
-		}
-		if nums[i]+nums[j] < target {
+		leftVal := numsInfo[i].num
+		rightVal := numsInfo[j].num
+		if leftVal+rightVal == target {
+			return []int{numsInfo[i].idx, numsInfo[j].idx}
+		} else if leftVal+rightVal < target {
 			i++
 		} else {
 			j--
@@ -58,4 +62,17 @@ func twoSumBin(nums []int, target int) []int {
 		}
 	}
 	return []int{}
+}
+
+func twoSumMap(nums []int, target int) []int {
+	n := len(nums)
+	store := make(map[int]int, n)
+	for i, val := range nums {
+		if idx, ok := store[target-val]; !ok {
+			store[val] = i
+		} else {
+			return []int{i, idx}
+		}
+	}
+	return nil
 }
