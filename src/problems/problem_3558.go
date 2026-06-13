@@ -16,7 +16,7 @@ const MOD = 1_000_000_007
 
 var depth [100_001]uint32
 
-func assignEdgeWeights(edges [][]int) int {
+func assignEdgeWeightsOld(edges [][]int) int {
 	sort.Slice(edges, func(i, j int) bool {
 		return edges[i][0] < edges[j][0]
 	})

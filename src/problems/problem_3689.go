@@ -4,7 +4,7 @@ package problems
 
 func Problem_3689() {}
 
-func maxTotalValue(nums []int, k int) int64 {
+func maxTotalValueOld(nums []int, k int) int64 {
 	maxVal := nums[0]
 	minVal := maxVal
 
