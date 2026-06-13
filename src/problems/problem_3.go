@@ -30,3 +30,23 @@ func lengthOfLongestSubstring(s string) int {
 	}
 	return maxLength
 }
+
+func lengthOfLongestSubstringEff(s string) int {
+	store := make([]int, 128)
+	for i := range store {
+		store[i] = -1
+	}
+	maxLength := 0
+	start := 0
+
+	for end, currentChar := range s {
+		last := store[currentChar]
+		if last < start {
+			maxLength = max(maxLength, end-start+1)
+		} else {
+			start = last + 1
+		}
+		store[currentChar] = end
+	}
+	return maxLength
+}
