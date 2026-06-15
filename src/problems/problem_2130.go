@@ -2,17 +2,34 @@
 
 package problems
 
+import "fmt"
+
+func Problem_2130() {
+	head := []int{5, 4, 2, 2}
+	fmt.Println(pairSum(GenerateLinkedList(head)))
+}
+
 func pairSum(head *ListNode) int {
-	nums := make([]int, 1_00_000)
-	idx := -1
-	for head != nil {
-		idx++
-		nums[idx] = head.Val
-		head = head.Next
+	trail := head
+	lead := head.Next
+	for lead.Next != nil {
+		trail = trail.Next
+		lead = lead.Next.Next
 	}
+	lead = trail.Next
+	forward := trail.Next
+	for forward.Next != nil {
+		buff := forward.Next
+		forward.Next = buff.Next
+		buff.Next = lead
+		lead = buff
+	}
+
 	maxVal := 0
-	for i := 0; i <= idx/2; i++ {
-		maxVal = max(maxVal, nums[i]+nums[idx-i])
+	for lead != nil {
+		maxVal = max(maxVal, head.Val+lead.Val)
+		head = head.Next
+		lead = lead.Next
 	}
 	return maxVal
 }
