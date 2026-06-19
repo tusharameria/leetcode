@@ -14,61 +14,42 @@ func Problem_3612() {
 }
 
 func processStrOld(s string) string {
-	res := []byte{}
-	n := len(s)
-	left, right := 0, 0
-	for right < n {
-		char := s[right]
-		if char >= 'a' && char <= 'z' {
+	res := ""
+
+	right := 0
+	count := 1
+	for right < len(s) {
+		ch := s[right]
+		if ch != '*' && ch != '#' && ch != '%' {
+			res += string(ch)
 			right++
-		} else if char == '*' {
-			j := right + 1
-			for j < n && s[j] == '*' {
-				j++
-			}
-			if left != right {
-				res = append(res, []byte(s[left:right])...)
-			}
-			resLen := len(res)
-			if j-right >= resLen {
-				res = []byte{}
-			} else {
-				res = res[:resLen-j+right]
-			}
-			right, left = j, j
-		} else if char == '#' {
-			j := right + 1
-			for j < n && s[j] == '#' {
-				j++
-			}
-			if left != right {
-				res = append(res, []byte(s[left:right])...)
-			}
-			for k := 0; k < j-right; k++ {
-				res = append(res, res...)
-			}
-			right, left = j, j
 		} else {
-			j := right + 1
-			for j < n && s[j] == '%' {
-				j++
-			}
-			if left != right {
-				res = append(res, []byte(s[left:right])...)
-			}
-			if (j-right)%2 == 1 {
-				resLen := len(res)
-				for i := 0; i < resLen/2; i++ {
-					res[i], res[resLen-1-i] = res[resLen-1-i], res[i]
+			if ch == '#' {
+				res += res
+				right++
+			} else if ch == '*' {
+				if right+1 < len(s) && s[right+1] == '*' {
+					right++
+					count++
+				} else {
+					if len(res) > count {
+						res = res[:len(res)-count]
+					} else {
+						res = ""
+					}
+					count = 1
+					right++
 				}
+			} else {
+				r := []rune(res)
+				for l, rgt := 0, len(r)-1; l < rgt; l, rgt = l+1, rgt-1 {
+					r[l], r[rgt] = r[rgt], r[l]
+				}
+				res = string(r)
+				right++
 			}
-			right, left = j, j
 		}
 	}
 
-	if left != right {
-		res = append(res, []byte(s[left:right])...)
-	}
-
-	return string(res)
+	return res
 }
