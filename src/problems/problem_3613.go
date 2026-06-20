@@ -20,19 +20,16 @@ func Problem_3613() {
 
 func processStr(s string, k int64) byte {
 	resLen := int64(0)
-	lastIndexAfterZero := 0
-	for i, b := range s {
-		if b == '*' || b == '#' || b == '%' {
-			if b == '*' {
+	for _, b := range s {
+		switch b {
+		case '*':
+			if resLen > 0 {
 				resLen--
-				if resLen <= 0 {
-					resLen = 0
-					lastIndexAfterZero = i + 1
-				}
-			} else if b == '#' {
-				resLen *= 2
 			}
-		} else {
+		case '#':
+			resLen *= 2
+		case '%':
+		default:
 			resLen++
 		}
 	}
@@ -41,25 +38,23 @@ func processStr(s string, k int64) byte {
 		return '.'
 	}
 
-	s = s[lastIndexAfterZero:]
-
-	n := len(s)
-	for i := n - 1; i >= 0; i-- {
+	for i := len(s) - 1; i >= 0; i-- {
 		ch := s[i]
-		if ch == '*' {
+		switch ch {
+		case '*':
 			resLen++
-		} else if ch == '#' {
+		case '#':
 			k = k % (resLen / 2)
 			resLen /= 2
-		} else if ch == '%' {
+		case '%':
 			k = resLen - 1 - k
-		} else {
+		default:
+			if k+1 == resLen {
+				return ch
+			}
 			resLen--
-		}
-		if resLen == k {
-			return ch
 		}
 	}
 
-	return '/'
+	return '.'
 }
