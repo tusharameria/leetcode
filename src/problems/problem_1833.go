@@ -36,18 +36,14 @@ func maxIceCream(costs []int, coins int) int {
 	count := 0
 	for i, freq := range store {
 		cost := i + minCost
-		if coins < cost {
+		if freq == 0 {
+			continue
+		} else if freq*cost <= coins {
+			coins -= freq * cost
+			count += freq
+		} else {
+			count += (coins / cost)
 			break
-		}
-		if freq != 0 {
-			for freq > 0 {
-				if coins < cost {
-					break
-				}
-				coins -= cost
-				count++
-				freq--
-			}
 		}
 	}
 	return count
