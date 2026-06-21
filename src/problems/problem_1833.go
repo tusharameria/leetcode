@@ -31,10 +31,6 @@ func maxIceCream(costs []int, coins int) int {
 	}
 	store := make([]int, maxCost-minCost+1)
 	for _, cost := range costs {
-		maxCost = max(maxCost, cost)
-		minCost = min(minCost, cost)
-	}
-	for _, cost := range costs {
 		store[cost-minCost]++
 	}
 	count := 0
