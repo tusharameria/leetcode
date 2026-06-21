@@ -9,7 +9,7 @@ package problems
 import "fmt"
 
 func Problem_3612() {
-	s := "quk**a"
+	s := "a#b%*"
 	fmt.Println(processStrOld(s))
 }
 
@@ -29,7 +29,6 @@ func processStrOld(s string) string {
 				right++
 			} else if ch == '*' {
 				if right+1 < len(s) && s[right+1] == '*' {
-					right++
 					count++
 				} else {
 					if len(res) > count {
@@ -38,14 +37,21 @@ func processStrOld(s string) string {
 						res = ""
 					}
 					count = 1
-					right++
 				}
+				right++
 			} else {
-				r := []rune(res)
-				for l, rgt := 0, len(r)-1; l < rgt; l, rgt = l+1, rgt-1 {
-					r[l], r[rgt] = r[rgt], r[l]
+				if right+1 < len(s) && s[right+1] == '%' {
+					count++
+				} else {
+					if count%2 == 1 {
+						r := []rune(res)
+						for l, rgt := 0, len(r)-1; l < rgt; l, rgt = l+1, rgt-1 {
+							r[l], r[rgt] = r[rgt], r[l]
+						}
+						res = string(r)
+					}
+					count = 1
 				}
-				res = string(r)
 				right++
 			}
 		}
