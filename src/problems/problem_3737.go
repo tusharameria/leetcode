@@ -12,27 +12,25 @@ func Problem_3737() {
 
 func countMajoritySubarrays(nums []int, target int) int {
 	n := len(nums)
-	prefixCount := make([]int, n+1)
-	for i := 1; i < n+1; i++ {
-		prefixCount[i] = prefixCount[i-1]
-		if nums[i-1] == target {
-			prefixCount[i]++
+	pre := make([]uint16, (2*n)+1)
+	pre[n] = 1
+
+	cnt := n
+	ans := 0
+	preSum := 0
+
+	for _, val := range nums {
+		if val == target {
+			preSum += int(pre[cnt])
+			cnt++
+			pre[cnt]++
+		} else {
+			cnt--
+			preSum -= int(pre[cnt])
+			pre[cnt]++
 		}
+		ans += preSum
 	}
 
-	// fmt.Println(prefixCount)
-
-	res := 0
-
-	for left := 0; left < n; left++ {
-		for right := left; right < n; right++ {
-			targetCount := prefixCount[right+1] - prefixCount[left]
-			elementCount := right - left + 1
-			if targetCount*2 > elementCount {
-				res++
-			}
-		}
-	}
-
-	return res
+	return ans
 }
