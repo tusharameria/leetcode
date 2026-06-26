@@ -7,9 +7,9 @@ import (
 )
 
 func Problem_3699() {
-	n := 7
-	l := 9
-	r := 39
+	n := 8183787
+	l := 21
+	r := 27
 	fmt.Println(zigZagArrays(n, l, r))
 }
 
