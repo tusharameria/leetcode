@@ -1,6 +1,10 @@
 package problems
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/tusharameria/leetcode/src/utils"
+)
 
 // 190. Reverse Bits
 
@@ -14,7 +18,7 @@ func reverseBits(n int) int {
 	exp := 31
 	for n > 0 {
 		rem := n % 2
-		res += rem * PowInt(2, exp)
+		res += rem * utils.PowInt(2, exp)
 		n = n / 2
 		exp--
 	}

@@ -1,6 +1,10 @@
 package problems
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/tusharameria/leetcode/src/utils"
+)
 
 // 1461. Check If a String Contains All Binary Codes of Size K
 
@@ -13,7 +17,7 @@ func Problem_1461() {
 func hasAllCodes(s string, k int) bool {
 	sum := 0
 	allZeroes := false
-	target := PowInt(2, k)
+	target := utils.PowInt(2, k)
 
 	if len(s) < k+target-1 {
 		return false
@@ -55,7 +59,7 @@ func hasAllCodes(s string, k int) bool {
 func hasAllCodesOld(s string, k int) bool {
 	allCombMap := make(map[string]bool)
 
-	if len(s) < k+PowInt(2, k)-1 {
+	if len(s) < k+utils.PowInt(2, k)-1 {
 		return false
 	}
 	var generateAllCombs func(i int, prefix string)
