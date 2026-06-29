@@ -22,6 +22,5 @@ func maximumElementAfterDecrementingAndRearranging(arr []int) int {
 			arr[i] = target
 		}
 	}
-	fmt.Println(arr)
 	return arr[n-1]
 }
