@@ -10,6 +10,11 @@ import (
 
 func Problem_1582() {
 	grid := utils.RandomInt2DArrayGenerator(0, 1, 5, 5)
+	grid = [][]int{
+		{1, 0, 0},
+		{0, 0, 1},
+		{1, 0, 0},
+	}
 	for _, row := range grid {
 		fmt.Println(row)
 	}
@@ -22,13 +27,10 @@ func numSpecial(mat [][]int) int {
 	colLen := len(mat[0])
 	rowsCount := make([]int, rowLen)
 	colsCount := make([]int, colLen)
-	rowsIdx := make([]int, rowLen)
-	colsIdx := make([]int, colLen)
 	for i := 0; i < rowLen; i++ {
 		for j := 0; j < colLen; j++ {
 			if mat[i][j] == 1 {
 				rowsCount[i]++
-				rowsIdx[i] = j
 			}
 		}
 	}
@@ -36,7 +38,6 @@ func numSpecial(mat [][]int) int {
 		for i := 0; i < rowLen; i++ {
 			if mat[i][j] == 1 {
 				colsCount[j]++
-				colsIdx[j] = i
 			}
 		}
 	}
@@ -51,8 +52,13 @@ func numSpecial(mat [][]int) int {
 
 	res := 0
 	for i := 0; i < rowLen; i++ {
-		if rowsCount[i] == 1 && colsCount[rowsIdx[i]] == 1 {
-			res++
+		if rowsCount[i] == 1 {
+			for j := 0; j < colLen; j++ {
+				if mat[i][j] == 1 && colsCount[j] == 1 {
+					res++
+					break
+				}
+			}
 		}
 	}
 
