@@ -5,49 +5,61 @@ package problems
 import "fmt"
 
 func Problem_1358() {
-	s := "abcabc"
+	s := "ababbbc"
 	fmt.Println(numberOfSubstrings(s))
 }
 
 func numberOfSubstrings(s string) int {
+	fmt.Println(s)
 	n := len(s)
-	aIdxStore := make([]int, n)
-	bIdxStore := make([]int, n)
-	cIdxStore := make([]int, n)
+	idxStore := [3]int{n, n, n}
 
-	aCount, bCount, cCount := 0, 0, 0
-
-	for i := 0; i < len(s); i++ {
-		switch s[i] {
-		case 'a':
-			aIdxStore[aCount] = i
-			aCount++
-		case 'b':
-			bIdxStore[bCount] = i
-			bCount++
-		default:
-			cIdxStore[cCount] = i
-			cCount++
-		}
+	for i := n - 1; i >= 0; i-- {
+		idxStore[int(s[i]-'a')] = i
 	}
-	aIdxStore = aIdxStore[:aCount]
-	bIdxStore = bIdxStore[:bCount]
-	cIdxStore = cIdxStore[:cCount]
-	aIdx, bIdx, cIdx := 0, 0, 0
+
+	left, mid, right := idxStore[0], idxStore[1], idxStore[2]
+
+	if mid > right {
+		mid, right = right, mid
+	}
+
+	if left > right {
+		left, right = right, left
+	}
+
+	if left > mid {
+		left, mid = mid, left
+	}
+
+	if right == n {
+		return 0
+	}
 
 	res := 0
+
 	for {
-		if aIdx == aCount || bIdx == bCount || cIdx == cCount {
+		fmt.Println("============")
+		fmt.Printf("res : %d\n", res)
+		fmt.Printf("left : %d\n", left)
+		fmt.Printf("mid : %d\n", mid)
+		fmt.Printf("right : %d\n", right)
+		res += (n - right) * (mid - left)
+		newIdx := n
+		for i := mid + 1; i < n; i++ {
+			if s[i] == s[left] {
+				newIdx = i
+				break
+			}
+		}
+		if newIdx == n {
 			return res
 		}
-		aIdxVal, bIdxVal, cIdxVal := aIdxStore[aIdx], bIdxStore[bIdx], cIdxStore[cIdx]
-		res += n - max(aIdxVal, bIdxVal, cIdxVal)
-		if aIdxVal < bIdxVal && aIdxVal < cIdxVal {
-			aIdx++
-		} else if bIdxVal < cIdxVal {
-			bIdx++
+		if newIdx < right {
+			left = mid
+			mid = newIdx
 		} else {
-			cIdx++
+			left, mid, right = mid, right, newIdx
 		}
 	}
 }
