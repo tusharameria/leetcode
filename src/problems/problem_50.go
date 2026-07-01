@@ -13,6 +13,9 @@ func Problem_50() {
 }
 
 func myPow(x float64, n int) float64 {
+	if n == 0 {
+		return 1
+	}
 	isNeg := n < 0
 	n = abs(n)
 	var pow func(x float64, n int) float64
