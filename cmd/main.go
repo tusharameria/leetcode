@@ -15,7 +15,7 @@ func main() {
 	// nums = nums[3:]
 	// fmt.Println(nums)
 
-	problems.Problem_3651()
+	problems.Problem_1888()
 
 	// topksortedstructures.KTopPairSum()
 
