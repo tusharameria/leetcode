@@ -36,6 +36,9 @@ func findSafeWalk(grid [][]int, health int) bool {
 	}
 
 	stack := [][2]int{{0, 0}}
+	if grid[0][0] == 1 {
+		health--
+	}
 	healthGrid[0][0] = health
 
 	for len(stack) > 0 {
@@ -57,9 +60,6 @@ func findSafeWalk(grid [][]int, health int) bool {
 			}
 			// time.Sleep(time.Millisecond * 500)
 		}
-	}
-	for _, row := range healthGrid {
-		fmt.Println(row)
 	}
 
 	return healthGrid[rowLen-1][colLen-1] >= 1
