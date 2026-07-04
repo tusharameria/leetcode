@@ -4,7 +4,6 @@ package problems
 
 import (
 	"fmt"
-	"math"
 )
 
 func Problem_2492() {
@@ -19,28 +18,28 @@ func Problem_2492() {
 }
 
 func minScore(n int, roads [][]int) int {
-	visited := make([]bool, n+1)
-	adjLists := make([][][2]int, n+1)
+	g := make([][][2]int, n+1)
 
 	for _, node := range roads {
 		node1, node2, cost := node[0], node[1], node[2]
-		adjLists[node1] = append(adjLists[node1], [2]int{node2, cost})
-		adjLists[node2] = append(adjLists[node2], [2]int{node1, cost})
+		g[node1] = append(g[node1], [2]int{node2, cost})
+		g[node2] = append(g[node2], [2]int{node1, cost})
 	}
-	stack := adjLists[1]
+
+	visited := make([]bool, n+1)
+	stack := []int{1}
 	visited[1] = true
-	res := math.MaxInt
-	for len(stack) > 0 {
-		adjList := stack[0]
-		stack = stack[1:]
-		newSource := adjList[0]
-		res = min(res, adjList[1])
-		for _, ls := range adjLists[newSource] {
+
+	res := 100000000
+	for i := 0; i < len(stack); i++ {
+		newSource := stack[i]
+		for _, ls := range g[newSource] {
 			if !visited[ls[0]] {
-				stack = append(stack, [2]int{ls[0], ls[1]})
+				stack = append(stack, ls[0])
+				visited[newSource] = true
+				res = min(res, ls[1])
 			}
 		}
-		visited[newSource] = true
 	}
 	return res
 }
