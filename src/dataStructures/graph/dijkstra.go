@@ -42,10 +42,10 @@ func Dijkstra() {
 	if !lastNodeTarget {
 		fmt.Println(false)
 	}
-	fmt.Println(dijkstraPossible(adjacentList, minPathValue, k))
+	fmt.Println(DijkstraPossible(adjacentList, minPathValue, k))
 }
 
-func dijkstraPossible(adjacentList [][][2]int, minPathValue int, totalCost int64) bool {
+func DijkstraPossible(adjacentList [][][2]int, minPathValue int, totalCost int64) bool {
 	n := len(adjacentList)
 	scores := make([]int, n)
 	inf := math.MaxInt
