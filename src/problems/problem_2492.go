@@ -27,7 +27,6 @@ func minScore(n int, roads [][]int) int {
 		adjLists[node1] = append(adjLists[node1], [2]int{node2, cost})
 		adjLists[node2] = append(adjLists[node2], [2]int{node1, cost})
 	}
-
 	stack := adjLists[1]
 	visited[1] = true
 	res := math.MaxInt
