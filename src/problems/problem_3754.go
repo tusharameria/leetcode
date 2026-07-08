@@ -9,10 +9,10 @@ import (
 
 func Problem_3754() {
 	n := 51
-	fmt.Println(sumAndMultiply(n))
+	fmt.Println(sumAndMultiplyOld(n))
 }
 
-func sumAndMultiply(n int) int64 {
+func sumAndMultiplyOld(n int) int64 {
 	new := 0
 	sum := 0
 	powerOfTen := 0
