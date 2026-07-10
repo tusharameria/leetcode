@@ -11,10 +11,10 @@ func Problem_3532() {
 	nums := []int{2, 5, 6, 8}
 	maxDiff := 2
 	queries := [][]int{{0, 1}, {0, 2}, {1, 3}, {2, 3}}
-	fmt.Println(pathExistenceQueries(n, nums, maxDiff, queries))
+	fmt.Println(pathExistenceQueriesOld(n, nums, maxDiff, queries))
 }
 
-func pathExistenceQueries(n int, nums []int, maxDiff int, queries [][]int) []bool {
+func pathExistenceQueriesOld(n int, nums []int, maxDiff int, queries [][]int) []bool {
 	queryLen := len(queries)
 	res := make([]bool, queryLen)
 	if n == 0 {
