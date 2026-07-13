@@ -14,25 +14,20 @@ func Problem_1331() {
 
 func arrayRankTransform(arr []int) []int {
 	n := len(arr)
-	pos := make([]int, n)
-	for i := range n {
-		pos[i] = i
-	}
+	sorted := make([]int, n)
+	copy(sorted, arr)
+	sort.Ints(sorted)
 
-	sort.Slice(pos, func(i, j int) bool {
-		return arr[pos[i]] < arr[pos[j]]
-	})
-
-	fmt.Println(pos)
-
-	res := make([]int, n)
-	val := 1
-	res[pos[0]] = val
-	for i := 1; i < n; i++ {
-		if arr[pos[i]] != arr[pos[i-1]] {
-			val++
+	store := make(map[int]int, n)
+	r := 0
+	for _, val := range sorted {
+		if _, ok := store[val]; !ok {
+			r++
+			store[val] = r
 		}
-		res[pos[i]] = val
 	}
-	return res
+	for i, val := range arr {
+		sorted[i] = store[val]
+	}
+	return sorted
 }
