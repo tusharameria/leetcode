@@ -8,8 +8,22 @@ import (
 )
 
 func Problem_3867() {
-	nums := []int{3, 6, 2, 8}
-	fmt.Println(nums)
+	nums := []int{1, 19, 33, 39, 40, 53, 65, 62}
+	fmt.Println(gcdSum(nums))
+}
+
+const SIZE = 64
+
+var LUT [SIZE][SIZE]uint8
+
+func init() {
+	for i := uint8(1); i < SIZE; i++ {
+		LUT[0][i], LUT[i][0], LUT[i][i] = i, i, i
+		for j := i + 1; j < SIZE; j++ {
+			r := LUT[i][j-i]
+			LUT[i][j], LUT[j][i] = r, r
+		}
+	}
 }
 
 func gcdSum(nums []int) int64 {
@@ -23,8 +37,10 @@ func gcdSum(nums []int) int64 {
 	for i := 1; i < n; i++ {
 		currVal := nums[i]
 		maxVal = max(maxVal, currVal)
-		prefixGcd[i] = gcd(maxVal, currVal)
+		prefixGcd[i] = gcd(currVal, maxVal)
 	}
+
+	fmt.Println(prefixGcd)
 
 	res := int64(0)
 	sort.Ints(prefixGcd)
@@ -34,14 +50,13 @@ func gcdSum(nums []int) int64 {
 	return res
 }
 
+// a is smaller
 func gcd(a, b int) int {
-	if b < a {
-		a, b = b, a
-	}
-
-	for b%a != 0 {
+	for b >= SIZE {
 		a, b = b%a, a
 	}
-
-	return a
+	if a == 0 {
+		return b
+	}
+	return int(LUT[a][b])
 }
