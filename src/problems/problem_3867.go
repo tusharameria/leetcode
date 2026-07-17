@@ -49,3 +49,14 @@ func gcdSum(nums []int) int64 {
 	}
 	return res
 }
+
+// a is smaller
+func gcd(a, b int) int {
+	for a >= SIZE {
+		a, b = b%a, a
+	}
+	if a == 0 {
+		return b
+	}
+	return int(LUT[b%a][a])
+}

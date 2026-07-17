@@ -4,7 +4,6 @@ package problems
 
 import (
 	"fmt"
-	"sort"
 )
 
 func Problem_3312() {
@@ -13,60 +12,53 @@ func Problem_3312() {
 	fmt.Println(gcdValues(nums, queries))
 }
 
-const LUT_NEW_SIZE = 64
-
-var LUT_NEW [64][64]uint8
-
-func init() {
-	for i := uint8(1); i < LUT_NEW_SIZE; i++ {
-		LUT_NEW[i][i], LUT_NEW[0][i], LUT_NEW[i][0] = i, i, i
-		for j := i + 1; j < LUT_NEW_SIZE; j++ {
-			r := LUT_NEW[i][j-i]
-			LUT_NEW[i][j], LUT_NEW[j][i] = r, r
-		}
-	}
-	// for _, row := range LUT_NEW {
-	// 	for _, val := range row {
-	// 		fmt.Printf("%0d ", val)
-	// 	}
-	// 	fmt.Println()
-	// }
-}
-
 func gcdValues(nums []int, queries []int64) []int {
-	queryLen := len(queries)
-	n := len(nums)
 
-	gcdPairs := make([]int, int64((n*(n-1))/2))
-
-	for i := 0; i < n; i++ {
-		a := nums[i]
-		for j := i + 1; j < n; j++ {
-			b := nums[j]
-			fmt.Printf("a : %d, b : %d\n", a, b)
-			fmt.Printf("gcd(a, b) : %d\n", gcd(a, b))
-			gcdPairs[(i*n)+j-((i+1)*(i+2)/2)] = gcd(a, b)
+	mx := 0
+	for _, x := range nums {
+		if x > mx {
+			mx = x
 		}
 	}
 
-	sort.Ints(gcdPairs)
-	res := make([]int, queryLen)
-	for i := 0; i < queryLen; i++ {
-		res[i] = gcdPairs[queries[i]]
+	freq := make([]int, mx+1)
+	for _, x := range nums {
+		freq[x]++
 	}
-	return res
-}
 
-// a is smaller
-func gcd(a, b int) int {
-	if b < a {
-		a, b = b, a
+	exact := make([]int64, mx+1)
+
+	for g := mx; g >= 1; g-- {
+		var cnt int64 = 0
+		for m := g; m <= mx; m += g {
+			cnt += int64(freq[m])
+		}
+		pairs := cnt * (cnt - 1) / 2
+		for m := g * 2; m <= mx; m += g {
+			pairs -= exact[m]
+		}
+		exact[g] = pairs
 	}
-	for a >= LUT_NEW_SIZE {
-		a, b = b%a, a
+
+	prefix := make([]int64, mx+1)
+	for g := 1; g <= mx; g++ {
+		prefix[g] = prefix[g-1] + exact[g]
 	}
-	if a == 0 {
-		return b
+
+	ans := make([]int, len(queries))
+
+	for i, q := range queries {
+		l, r := 1, mx
+		for l < r {
+			mid := (l + r) / 2
+			if prefix[mid] >= q+1 {
+				r = mid
+			} else {
+				l = mid + 1
+			}
+		}
+		ans[i] = l
 	}
-	return int(LUT_NEW[b%a][a])
+
+	return ans
 }
