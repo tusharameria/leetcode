@@ -17,25 +17,21 @@ func Problem_1260() {
 }
 
 func shiftGrid(grid [][]int, k int) [][]int {
-	rowLen := len(grid)
-	colLen := len(grid[0])
-	k = k % (rowLen * colLen)
+	y := len(grid)
+	x := len(grid[0])
 
-	if k == 0 {
-		return grid
+	res := make([][]int, y)
+	for i := range y {
+		res[i] = make([]int, x)
 	}
 
-	res := make([][]int, rowLen)
-	for i := range rowLen {
-		res[i] = make([]int, colLen)
-	}
-
-	idx := 0
-	for i := 0; i < rowLen; i++ {
-		for j := 0; j < colLen; j++ {
-			newIdx := (idx + k) % (rowLen * colLen)
-			res[newIdx/colLen][newIdx%colLen] = grid[i][j]
-			idx++
+	for i := 0; i < y; i++ {
+		for j := 0; j < x; j++ {
+			ny := (k / x) + i
+			if (j + (k % x)) >= x {
+				ny++
+			}
+			res[ny%y][(j+(k%x))%x] = grid[i][j]
 		}
 	}
 
