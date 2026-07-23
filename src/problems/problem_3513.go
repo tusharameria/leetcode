@@ -4,6 +4,7 @@ package problems
 
 import (
 	"fmt"
+	"math/bits"
 )
 
 func Problem_3513() {
@@ -13,15 +14,8 @@ func Problem_3513() {
 
 func uniqueXorTriplets(nums []int) int {
 	n := len(nums)
-	res := make(map[int]bool)
-	for i := 0; i < n; i++ {
-		for j := i; j < n; j++ {
-			firstXor := nums[i] ^ nums[j]
-			for k := j; k < n; k++ {
-				res[firstXor^nums[k]] = true
-			}
-		}
+	if n <= 2 {
+		return n
 	}
-
-	return len(res)
+	return 1 << bits.Len(uint(n))
 }
