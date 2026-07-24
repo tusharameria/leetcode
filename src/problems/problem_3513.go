@@ -9,10 +9,10 @@ import (
 
 func Problem_3513() {
 	nums := []int{3, 1, 2}
-	fmt.Println(uniqueXorTriplets(nums))
+	fmt.Println(uniqueXorTripletsOld(nums))
 }
 
-func uniqueXorTriplets(nums []int) int {
+func uniqueXorTripletsOld(nums []int) int {
 	n := len(nums)
 	if n <= 2 {
 		return n
