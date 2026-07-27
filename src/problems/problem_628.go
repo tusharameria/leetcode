@@ -4,7 +4,6 @@ package problems
 
 import (
 	"fmt"
-	"sort"
 )
 
 func Problem_628() {
@@ -17,6 +16,26 @@ func maximumProduct(nums []int) int {
 	if n == 3 {
 		return nums[0] * nums[1] * nums[2]
 	}
-	sort.Ints(nums)
-	return max((nums[n-1] * nums[n-2] * nums[n-3]), (nums[n-1] * nums[0] * nums[1]))
+	max1, max2, max3 := -1000, -1000, -1000
+	min1, min2 := 1000, 1000
+
+	for i := 0; i < n; i++ {
+		val := nums[i]
+		if val > max1 {
+			max1, max2, max3 = val, max1, max2
+		} else if val > max2 {
+			max2, max3 = val, max2
+		} else if val > max3 {
+			max3 = val
+		}
+
+		if val < min1 {
+			min1, min2 = val, min1
+		} else if val < min2 {
+			min2 = val
+		}
+
+	}
+
+	return max((max1 * max2 * max3), (max1 * min1 * min2))
 }
