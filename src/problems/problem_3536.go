@@ -6,10 +6,10 @@ import "fmt"
 
 func Problem_3536() {
 	n := 23
-	fmt.Println(maxProduct(n))
+	fmt.Println(maxProductOld(n))
 }
 
-func maxProduct(n int) int {
+func maxProductOld(n int) int {
 	firstMax := n % 10
 	n /= 10
 	secondMax := n % 10
