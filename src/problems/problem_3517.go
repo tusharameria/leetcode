@@ -4,7 +4,6 @@ package problems
 
 import (
 	"fmt"
-	"slices"
 )
 
 func Problem_3517() {
@@ -17,18 +16,25 @@ func smallestPalindrome(s string) string {
 	if n <= 3 {
 		return s
 	}
+
 	res := make([]byte, n)
 	if n%2 == 1 {
 		res[n/2] = s[n/2]
 	}
-	buff := make([]byte, n/2)
-	copy(buff, s[:n/2])
 
-	slices.Sort(buff)
-
+	countingStore := make([]uint16, 26)
 	for i := 0; i < n/2; i++ {
-		val := buff[i]
-		res[i], res[n-1-i] = val, val
+		ch := s[i]
+		countingStore[ch-'a']++
+	}
+
+	i := 0
+	for idx, count := range countingStore {
+		for range count {
+			val := byte('a' + idx)
+			res[i], res[n-1-i] = val, val
+			i++
+		}
 	}
 
 	return string(res)
