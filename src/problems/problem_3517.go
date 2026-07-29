@@ -8,10 +8,10 @@ import (
 
 func Problem_3517() {
 	s := "babab"
-	fmt.Println(smallestPalindrome(s))
+	fmt.Println(smallestPalindromeOld(s))
 }
 
-func smallestPalindrome(s string) string {
+func smallestPalindromeOld(s string) string {
 	n := len(s)
 	if n <= 3 {
 		return s
