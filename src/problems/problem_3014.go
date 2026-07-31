@@ -6,10 +6,10 @@ import "fmt"
 
 func Problem_3014() {
 	word := "qwertyuiopasdfgh"
-	fmt.Println(minimumPushes(word))
+	fmt.Println(minimumPushesOld(word))
 }
 
-func minimumPushes(word string) int {
+func minimumPushesOld(word string) int {
 	n := len(word)
 	div := n / 8
 	rem := n % 8
