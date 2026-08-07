@@ -6,10 +6,10 @@ import "fmt"
 
 func Problem_3345() {
 	n, t := 11, 3
-	fmt.Println(smallestNumber(n, t))
+	fmt.Println(smallestNumber3345(n, t))
 }
 
-func smallestNumber(n int, t int) int {
+func smallestNumber3345(n int, t int) int {
 	for i := n; ; i++ {
 		num := i / 10
 		digit := i % 10
