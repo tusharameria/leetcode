@@ -15,7 +15,7 @@ func main() {
 	// nums = nums[3:]
 	// fmt.Println(nums)
 
-	problems.Problem_3348()
+	problems.Problem_3302()
 	// slice := []int{64, 87, 2}
 	// fmt.Println(slice)
 	// testy(slice)
