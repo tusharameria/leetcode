@@ -2,54 +2,47 @@
 
 package problems
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/tusharameria/leetcode/src/utils"
+)
 
 func Problem_1140() {
-	piles := []int{4, 6, 8, 3, 9, 5, 6, 8, 3, 2, 6}
-	fmt.Println(stoneGameII(piles))
+	for i := 0; i < 1; i++ {
+		piles := utils.RandomIntArrayGenerator(1, 100, 100)
+		fmt.Println(stoneGameII(piles))
+	}
+}
+
+const STEP = 1 << 20
+const MASK = STEP - 1
+
+var dp [101][101]int
+var suf [101]int
+var gen int
+
+func solve(i, m, n int) (win int) {
+	if i >= n {
+		return 0
+	} else if 2*m >= n-i {
+		return suf[i]
+	} else if dp[i][m] >= gen {
+		return dp[i][m] & MASK
+	}
+	for j := 1; j <= 2*m; j++ {
+		win = max(win, suf[i]-solve(i+j, max(m, j), n))
+	}
+	dp[i][m] = win | gen
+	return win
 }
 
 func stoneGameII(piles []int) int {
 	n := len(piles)
-	suffix := make([]int, n+1)
+	gen += STEP
+	suf[n] = 0
 	for i := n - 1; i >= 0; i-- {
-		suffix[i] = piles[i] + suffix[i+1]
+		suf[i] = suf[i+1] + piles[i]
 	}
-	fmt.Println(suffix)
-
-	dp := make([][]int, n)
-	for i := range n {
-		dp[i] = make([]int, n+1)
-		for j := range n + 1 {
-			dp[i][j] = -1
-		}
-	}
-
-	var solve func(i, m int) int
-	solve = func(i, m int) int {
-		if i == n {
-			return 0
-		}
-		if dp[i][m] != -1 {
-			return dp[i][m]
-		}
-
-		best := 0
-
-		for x := 1; x <= 2*m && i+x <= n; x++ {
-			nextM := m
-			if x > nextM {
-				nextM = x
-			}
-
-			current := suffix[i] - solve(i+x, nextM)
-			if current > best {
-				best = current
-			}
-		}
-		dp[i][m] = best
-		return best
-	}
-
-	return solve(0, 1)
+	return solve(0, 1, n)
 }

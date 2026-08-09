@@ -10,18 +10,18 @@ func Problem_3302() {
 	fmt.Println(validSequence(word1, word2))
 }
 
-var suf [300_001]int32
+var sufOld [300_001]int32
 var res [300_000]int
 
 func validSequence(a string, b string) []int {
 	m, n := int32(len(a)), int32(len(b))
 	for i := range n {
-		suf[i] = -1
+		sufOld[i] = -1
 	}
-	suf[n] = m
+	sufOld[n] = m
 	for i, j := m-1, n-1; i >= 0 && j >= 0; i-- {
 		if a[i] == b[j] {
-			suf[j] = i
+			sufOld[j] = i
 			j--
 		}
 	}
@@ -30,7 +30,7 @@ func validSequence(a string, b string) []int {
 		if a[i] == b[j] {
 			res[j] = int(i)
 			j++
-		} else if !flag && i < suf[j+1] {
+		} else if !flag && i < sufOld[j+1] {
 			flag = true
 			res[j] = int(i)
 			j++
