@@ -4,12 +4,13 @@ package problems
 
 import (
 	"fmt"
-	"math"
 )
 
 func Problem_1510() {
-	n := 7
-	fmt.Println(winnerSquareGame(n))
+	arr := []int{4, 2, 7, 34, 76, 84, 986, 345}
+	for _, n := range arr {
+		fmt.Println(winnerSquareGame(n))
+	}
 }
 
 // Constraints:
@@ -18,23 +19,19 @@ func Problem_1510() {
 var dp_1510 [1_00_001]bool
 
 func init() {
-	maxNum := 1_00_000
 	dp_1510[1] = true
 
-	for i := 2; i <= maxNum; i++ {
-		var maxNumOfStonesSqrt int = int(math.Sqrt(float64(i)))
-		possible := false
-		for j := maxNumOfStonesSqrt; j >= 1; j-- {
-			if !dp_1510[i-(j*j)] {
-				possible = true
+	for i := 1; i <= 1_00_000; i++ {
+		for j := 1; j*j <= i; j++ {
+			if !dp_1510[i-j*j] {
+				dp_1510[i] = true
 				break
 			}
 		}
-		dp_1510[i] = possible
 	}
 }
 
 func winnerSquareGame(n int) bool {
-	fmt.Println(dp_1510[:n+1])
+	// fmt.Println(dp_1510[:n+1])
 	return dp_1510[n]
 }
