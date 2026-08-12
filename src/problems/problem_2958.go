@@ -17,13 +17,17 @@ func Problem_2958() {
 // ---> 1 <= k <= nums.length
 
 func maxSubarrayLength(nums []int, k int) int {
-	windFreqs := make(map[int]int, len(nums))
-	left, res := 0, 0
+	newK := uint32(k)
+	n := uint32(len(nums))
+	windFreqs := make(map[int]uint32, n)
+	var left uint32 = 0
+	var res uint32 = 0
+	var right uint32 = 0
 
-	for right := range len(nums) {
+	for ; right < n; right++ {
 		windFreqs[nums[right]]++
 
-		for windFreqs[nums[right]] > k {
+		for windFreqs[nums[right]] > newK {
 			windFreqs[nums[left]]--
 			left++
 		}
@@ -31,5 +35,5 @@ func maxSubarrayLength(nums []int, k int) int {
 		res = max(res, right-left+1)
 	}
 
-	return res
+	return int(res)
 }
