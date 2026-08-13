@@ -16,7 +16,7 @@ func Problem_1140() {
 }
 
 const STEP = 1 << 20
-const MASK = STEP - 1
+const MASK_1140 = STEP - 1
 
 var dp [101][101]int
 var suf [101]int
@@ -28,7 +28,7 @@ func solve(i, m, n int) (win int) {
 	} else if 2*m >= n-i {
 		return suf[i]
 	} else if dp[i][m] >= gen {
-		return dp[i][m] & MASK
+		return dp[i][m] & MASK_1140
 	}
 	for j := 1; j <= 2*m; j++ {
 		win = max(win, suf[i]-solve(i+j, max(m, j), n))

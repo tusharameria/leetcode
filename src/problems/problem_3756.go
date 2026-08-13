@@ -16,14 +16,14 @@ func Problem_3756() {
 	fmt.Println(sumAndMultiply(s, queries))
 }
 
-const MAXN = 100_000
+const MAXN_3756 = 100_000
 
-var pow10, xs [MAXN + 1]int
-var sums, digits [MAXN + 1]int
+var pow10, xs [MAXN_3756 + 1]int
+var sums, digits [MAXN_3756 + 1]int
 
 func init() {
 	pow10[0] = 1
-	for i := 1; i <= MAXN; i++ {
+	for i := 1; i <= MAXN_3756; i++ {
 		pow10[i] = (pow10[i-1] * 10) % MOD
 	}
 }
