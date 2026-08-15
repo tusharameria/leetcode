@@ -17,22 +17,27 @@ func Problem_3702() {
 func longestSubsequence(nums []int) int {
 	xor := 0
 	hasNonZero := false
-
-	for _, num := range nums {
-		xor ^= num
-
+	n := len(nums)
+	for i := 0; i < n; i++ {
+		num := nums[i]
 		if num != 0 {
 			hasNonZero = true
+			break
 		}
 	}
 
+	if !hasNonZero {
+		return 0
+	}
+
+	for i := 0; i < n; i++ {
+		num := nums[i]
+		xor ^= num
+	}
+
 	if xor != 0 {
-		return len(nums)
+		return n
 	}
 
-	if hasNonZero {
-		return len(nums) - 1
-	}
-
-	return 0
+	return n - 1
 }
