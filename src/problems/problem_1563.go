@@ -2,7 +2,7 @@
 
 package problems
 
-func Problem_1563()
+func Problem_1563() {}
 
 func stoneGameV(stoneValue []int) int {
 	n := len(stoneValue)
