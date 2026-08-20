@@ -17,14 +17,14 @@ func Problem_3069() {
 
 func resultArray(nums []int) []int {
 	n := len(nums)
-	arr1 := make([]int, n)
-	arr1[0] = nums[0]
-	arr2 := make([]int, n)
-	arr2[0] = nums[1]
+	arr1 := make([]uint8, n)
+	arr1[0] = uint8(nums[0])
+	arr2 := make([]uint8, n)
+	arr2[0] = uint8(nums[1])
 	idx1, idx2 := 1, 1
 
 	for i := 2; i < n; i++ {
-		val := nums[i]
+		val := uint8(nums[i])
 		if arr1[idx1-1] > arr2[idx2-1] {
 			arr1[idx1] = val
 			idx1++
@@ -34,5 +34,13 @@ func resultArray(nums []int) []int {
 		}
 	}
 
-	return append(arr1[:idx1], arr2[:idx2]...)
+	for i := 0; i < idx1; i++ {
+		nums[i] = int(arr1[i])
+	}
+
+	for i := 0; i < idx2; i++ {
+		nums[i+idx1] = int(arr2[i])
+	}
+
+	return nums
 }
