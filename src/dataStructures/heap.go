@@ -82,6 +82,6 @@ func main() {
 	heap.Init(h)
 
 	heap.Push(h, 3)
-	fmt.Println(heap.Pop(h)) // 1
+	fmt.Println(heap.Pop(h)) // 5
 	fmt.Println(heap.Pop(h)) // 2
 }
