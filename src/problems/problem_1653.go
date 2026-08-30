@@ -4,7 +4,7 @@ package problems
 
 func Problem_1653() {}
 
-func minimumDeletions(s string) int {
+func minimumDeletions_1653(s string) int {
 	bCount := 0
 	ans := 0
 
