@@ -9,10 +9,10 @@ import (
 func Problem_1674() {
 	nums := []int{1, 2, 4, 3}
 	limit := 4
-	fmt.Println(minMoves(nums, limit))
+	fmt.Println(minMoves_1674(nums, limit))
 }
 
-func minMoves(nums []int, limit int) int {
+func minMoves_1674(nums []int, limit int) int {
 	n := len(nums)
 	diff := make([]int, 2*limit+2)
 	for i := range n / 2 {
