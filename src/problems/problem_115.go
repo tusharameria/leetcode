@@ -15,9 +15,9 @@ func numDistinct(s, t string) int {
 	if m < n {
 		return 0
 	}
-	dp := make([][]int, m+1)
+	dp := make([][]int32, m+1)
 	for i := range dp {
-		dp[i] = make([]int, n+1)
+		dp[i] = make([]int32, n+1)
 		dp[i][n] = 1
 	}
 	for i := m - 1; i >= 0; i-- {
@@ -29,5 +29,5 @@ func numDistinct(s, t string) int {
 			}
 		}
 	}
-	return dp[0][0]
+	return int(dp[0][0])
 }
