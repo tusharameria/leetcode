@@ -10,7 +10,7 @@ func Problem_3903() {}
 // --> 0 <= nums[i] <= 10^9
 // --> 0 <= k <= 10^9
 
-func firstStableIndex(nums []int, k int) int {
+func firstStableIndex_3903(nums []int, k int) int {
 	n := len(nums)
 	resIdx := n
 	maxArr := make([]int, n)
