@@ -7,7 +7,7 @@ import (
 )
 
 func Problem_3904() {
-	fmt.Println(firstStableIndex([]int{}, 3))
+	fmt.Println(firstStableIndex([]int{5, 0, 1, 4}, 3))
 }
 
 // Constraints:
@@ -16,31 +16,29 @@ func Problem_3904() {
 // --> 0 <= nums[i] <= 10^9
 // --> 0 <= k <= 10^9
 
+const MASK_3904 = (1 << 32) - 1
+
 func firstStableIndex(nums []int, k int) int {
-	// fmt.Println("maxInt bit len", bits.Len(math.MaxInt))
-	// fmt.Println("maxInt32 bit len", bits.Len(math.MaxInt32))
-	// fmt.Println("maxInt bit len", bits.Len(math.MaxInt+1))
-	// fmt.Println("10^9 bit len", bits.Len(1_000_000_000))
 	n := len(nums)
-	if n == 0 {
-		return -1
+
+	// Max Values from 0 to i in uppar bits
+	maxVal := -1
+	for i := 0; i < n; i++ {
+		maxVal = max(maxVal, nums[i])
+		nums[i] |= maxVal << 32
 	}
+
 	resIdx := n
-	maxArr := make([]int32, n)
-	maxArr[0] = int32(nums[0])
-	for i := 1; i < n; i++ {
-		maxArr[i] = max(maxArr[i-1], int32(nums[i]))
-	}
-	minVal := int32(nums[n-1])
-	if maxArr[n-1]-minVal <= int32(k) {
-		resIdx = n - 1
-	}
-	for i := n - 2; i >= 0; i-- {
-		minVal = min(minVal, int32(nums[i]))
-		if maxArr[i]-minVal <= int32(k) {
+	minVal := 1_000_000_001
+	for i := n - 1; i >= 0; i-- {
+		lower := nums[i] & MASK_3904
+		minVal = min(minVal, lower)
+		upper := nums[i] >> 32
+		if upper-minVal <= k {
 			resIdx = i
 		}
 	}
+
 	if resIdx == n {
 		return -1
 	}
