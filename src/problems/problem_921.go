@@ -10,8 +10,8 @@ func Problem_921() {
 }
 
 func minAddToMakeValid(s string) int {
-	res := 0
-	sum := 0
+	var res int16
+	var sum int16
 	for i := 0; i < len(s); i++ {
 		if s[i] == '(' {
 			if sum < 0 {
@@ -26,5 +26,5 @@ func minAddToMakeValid(s string) int {
 	if sum < 0 {
 		sum = -sum
 	}
-	return res + sum
+	return int(res + sum)
 }
