@@ -3,7 +3,7 @@ package problems
 import "fmt"
 
 func Problem_22() {
-	n := 3
+	n := 6
 	fmt.Println(generateParenthesis(n))
 }
 
@@ -25,6 +25,8 @@ func generateParenthesis(n int) []string {
 	}
 
 	solve(n, n, "")
+
+	fmt.Println(len(res))
 
 	return res
 }
