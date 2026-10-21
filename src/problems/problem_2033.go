@@ -9,10 +9,10 @@ import (
 
 func Problem_2033() {
 	grid := [][]int{{2, 4}, {6, 8}}
-	fmt.Println(minOperations(grid, 2))
+	fmt.Println(minOperations_2033(grid, 2))
 }
 
-func minOperations(grid [][]int, x int) int {
+func minOperations_2033(grid [][]int, x int) int {
 	height := len(grid)
 	width := len(grid[0])
 	nums := make([]int, height*width)
