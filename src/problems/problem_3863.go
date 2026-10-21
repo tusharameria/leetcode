@@ -64,5 +64,13 @@ func minOperations(s string) int {
 		return 1
 	}
 
+	if first >= smallest && first <= largest && last >= smallest && last <= largest {
+		return 2
+	}
+
+	if (first >= largest && first >= last && last >= smallest) || (last <= first && last <= smallest && first <= largest) {
+		return 2
+	}
+
 	return 3
 }
